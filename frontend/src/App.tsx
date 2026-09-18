@@ -36,7 +36,7 @@ export const App: React.FC = () => {
         <BrowserRouter>
           <Routes>
             {/* Standalone Exam & Quiz Engine Modes for maximal focus */}
-            <Route path="/quizzes/:id" element={<QuizEnginePage />} />
+            <Route path="/quizzes/:id" element={<ProtectedRoute><QuizEnginePage /></ProtectedRoute>} />
             <Route
               path="/tryout/:id/exam"
               element={
@@ -62,15 +62,15 @@ export const App: React.FC = () => {
               />
 
               {/* Course, Module & Lesson Routes */}
-              <Route path="/courses" element={<CourseCatalogPage />} />
-              <Route path="/courses/:slug" element={<CourseDetailPage />} />
-              <Route path="/lessons/:id" element={<LessonViewPage />} />
+              <Route path="/courses" element={<ProtectedRoute><CourseCatalogPage /></ProtectedRoute>} />
+              <Route path="/courses/:slug" element={<ProtectedRoute><CourseDetailPage /></ProtectedRoute>} />
+              <Route path="/lessons/:id" element={<ProtectedRoute><LessonViewPage /></ProtectedRoute>} />
 
               {/* Quiz Result & Review Route */}
-              <Route path="/quizzes/result/:attemptId" element={<QuizResultPage />} />
+              <Route path="/quizzes/result/:attemptId" element={<ProtectedRoute><QuizResultPage /></ProtectedRoute>} />
 
               {/* Tryout Module Routes */}
-              <Route path="/tryout" element={<TryoutCatalogPage />} />
+              <Route path="/tryout" element={<ProtectedRoute><TryoutCatalogPage /></ProtectedRoute>} />
               <Route
                 path="/tryout/result/:attemptId"
                 element={
@@ -81,7 +81,7 @@ export const App: React.FC = () => {
               />
 
               {/* Leaderboard & Achievements Route */}
-              <Route path="/leaderboard" element={<LeaderboardPage />} />
+              <Route path="/leaderboard" element={<ProtectedRoute><LeaderboardPage /></ProtectedRoute>} />
 
               {/* Admin Panel (Protected: ADMIN only) */}
               <Route

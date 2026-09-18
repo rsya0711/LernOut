@@ -125,7 +125,7 @@ export class ProgressService {
         totalCorrectAnswers,
         overallAccuracy,
       },
-      activeCourses: user.courseProgresses.map((cp) => ({
+      activeCourses: user.courseProgresses.map((cp: any) => ({
         id: cp.course.id,
         title: cp.course.title,
         slug: cp.course.slug,
@@ -137,7 +137,7 @@ export class ProgressService {
         enrolledAt: cp.enrolledAt,
         updatedAt: cp.updatedAt,
       })),
-      recentQuizAttempts: user.quizAttempts.map((qa) => ({
+      recentQuizAttempts: user.quizAttempts.map((qa: any) => ({
         id: qa.id,
         quizTitle: qa.quiz.title,
         score: qa.score,
