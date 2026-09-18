@@ -42,8 +42,8 @@ export class GamificationService {
 
       const userMap = new Map(users.map((u) => [u.id, u]));
 
-      return weeklyLogs.map((log, index) => {
-        const user = userMap.get(log.userId);
+      return weeklyLogs.map((log: any, index: number) => {
+        const user: any = userMap.get(log.userId);
         return {
           rank: index + 1,
           userId: log.userId,
