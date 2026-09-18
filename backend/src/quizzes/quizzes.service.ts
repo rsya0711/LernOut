@@ -300,8 +300,8 @@ export class QuizzesService {
       throw new NotFoundException(`Riwayat pengerjaan kuis tidak ditemukan.`);
     }
 
-    const review = attempt.answers.map((ans) => {
-      const correctOption = ans.question.options.find((opt) => opt.isCorrect);
+    const review = attempt.answers.map((ans: any) => {
+      const correctOption = ans.question.options.find((opt: any) => opt.isCorrect);
       return {
         questionId: ans.question.id,
         prompt: ans.question.prompt,
@@ -310,7 +310,7 @@ export class QuizzesService {
         userSelectedText: ans.selectedOption?.text || '(Tidak dijawab)',
         correctOptionText: correctOption?.text || '',
         isCorrect: ans.isCorrect,
-        options: ans.question.options.map((opt) => ({
+        options: ans.question.options.map((opt: any) => ({
           id: opt.id,
           text: opt.text,
           isCorrect: opt.isCorrect,
