@@ -337,7 +337,7 @@ export class ExamsService {
     > = {};
 
     const review = attempt.examTryout.questions.map((q) => {
-      const userAns = answerMap.get(q.id);
+      const userAns: any = answerMap.get(q.id);
       const correctOpt = q.options.find((o) => o.isCorrect);
       const category = q.categoryTag || 'Penalaran Umum';
 
