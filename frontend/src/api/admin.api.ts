@@ -61,4 +61,30 @@ export const adminApi = {
     const res = await apiClient.delete(`/admin/courses/${id}`);
     return res.data;
   },
+
+  // --- Curriculum Builder ---
+  createModule: async (data: any) => {
+    const res = await apiClient.post('/admin/modules', data);
+    return res.data;
+  },
+  deleteModule: async (id: string) => {
+    const res = await apiClient.delete(`/admin/modules/${id}`);
+    return res.data;
+  },
+  createLesson: async (data: any) => {
+    const res = await apiClient.post('/admin/lessons', data);
+    return res.data;
+  },
+  deleteLesson: async (id: string) => {
+    const res = await apiClient.delete(`/admin/lessons/${id}`);
+    return res.data;
+  },
+  createQuiz: async (data: any) => {
+    const res = await apiClient.post('/admin/quizzes', data);
+    return res.data;
+  },
+  createQuestion: async (data: any) => {
+    const res = await apiClient.post('/admin/questions', data);
+    return res.data;
+  }
 };

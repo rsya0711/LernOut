@@ -6,12 +6,11 @@ import {
   BookOpen,
   Zap,
   Layers,
-  Sparkles,
+  Star,
   ArrowRight,
   Filter,
 } from 'lucide-react';
 import { coursesApi } from '../../api/courses.api';
-import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
 import { ProgressBar } from '../../components/ui/ProgressBar';
@@ -46,15 +45,17 @@ export const CourseCatalogPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Header Banner */}
-      <div className="bg-gradient-to-r from-brand-800 to-emerald-900 rounded-3xl p-8 sm:p-10 text-white shadow-xl relative overflow-hidden">
+      <div className="glass-hero rounded-3xl p-8 sm:p-12 relative overflow-hidden">
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-10 w-72 h-72 bg-purple-500/15 rounded-full blur-3xl pointer-events-none" />
         <div className="relative z-10 max-w-2xl space-y-3">
-          <Badge variant="streak" size="sm" className="bg-amber-400 text-slate-900 border-none">
-            <Sparkles className="w-3.5 h-3.5 fill-slate-900" /> Katalog Belajar Interaktif
+          <Badge variant="streak" size="sm" className="bg-amber-50 border border-amber-200 text-amber-700">
+            <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" /> Katalog Belajar Interaktif
           </Badge>
-          <h1 className="text-3xl sm:text-4xl font-black tracking-tight">
-            Pilih Materi & Capai Target Belajarmu
+          <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-800">
+            Pilih Materi &amp; Capai <span className="text-shimmer">Target Belajarmu</span>
           </h1>
-          <p className="text-slate-200 text-sm sm:text-base leading-relaxed">
+          <p className="text-slate-500 text-sm sm:text-base leading-relaxed">
             Materi disusun bertahap dari pemahaman konsep, contoh soal aplikatif, kuis kilat, hingga pembahasan mendalam standar UTBK/SNBT.
           </p>
         </div>
@@ -71,7 +72,7 @@ export const CourseCatalogPage: React.FC = () => {
               placeholder="Cari kursus atau topik pelajaran..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-11 pr-4 py-2.5 rounded-xl border-2 border-slate-200 bg-white text-sm font-semibold text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
+              className="w-full pl-11 pr-4 py-2.5 rounded-xl border border-slate-200 bg-white/80 text-sm font-semibold text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 shadow-sm transition-all"
             />
           </div>
 
@@ -86,8 +87,8 @@ export const CourseCatalogPage: React.FC = () => {
                 onClick={() => setSelectedLevel(lvl)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-extrabold whitespace-nowrap transition-all ${
                   selectedLevel === lvl
-                    ? 'bg-brand-500 text-white shadow-sm'
-                    : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
+                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-500/20'
+                    : 'bg-white/80 border border-slate-200 text-slate-600 hover:bg-white hover:text-slate-800'
                 }`}
               >
                 {lvl === 'all' ? 'Semua Tingkat' : levelLabels[lvl] || lvl}
@@ -102,8 +103,8 @@ export const CourseCatalogPage: React.FC = () => {
             onClick={() => setSelectedCategory('all')}
             className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all ${
               selectedCategory === 'all'
-                ? 'bg-slate-900 text-white shadow-md'
-                : 'bg-white border-2 border-slate-200 text-slate-600 hover:border-slate-300'
+                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-500/20'
+                : 'bg-white/80 border border-slate-200 text-slate-600 hover:bg-white hover:text-slate-800'
             }`}
           >
             Semua Kategori
@@ -114,8 +115,8 @@ export const CourseCatalogPage: React.FC = () => {
               onClick={() => setSelectedCategory(cat.slug)}
               className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all ${
                 selectedCategory === cat.slug
-                  ? 'bg-slate-900 text-white shadow-md'
-                  : 'bg-white border-2 border-slate-200 text-slate-600 hover:border-slate-300'
+                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-500/20'
+                  : 'bg-white/80 border border-slate-200 text-slate-600 hover:bg-white hover:text-slate-800'
               }`}
             >
               <span>{cat.name}</span>
@@ -133,16 +134,16 @@ export const CourseCatalogPage: React.FC = () => {
       {isLoadingCourses ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[1, 2, 3].map((i) => (
-            <Card key={i} className="animate-pulse space-y-4 p-6">
+            <div key={i} className="glass-card rounded-2xl animate-pulse space-y-4 p-6">
               <div className="h-6 bg-slate-200 rounded w-1/3" />
               <div className="h-8 bg-slate-200 rounded w-3/4" />
               <div className="h-16 bg-slate-200 rounded" />
               <div className="h-10 bg-slate-200 rounded" />
-            </Card>
+            </div>
           ))}
         </div>
       ) : courses.length === 0 ? (
-        <Card className="p-12 text-center space-y-4 max-w-lg mx-auto">
+        <div className="glass-card rounded-3xl p-12 text-center space-y-4 max-w-lg mx-auto">
           <div className="w-16 h-16 rounded-full bg-amber-50 text-amber-500 mx-auto flex items-center justify-center">
             <BookOpen className="w-8 h-8" />
           </div>
@@ -160,14 +161,13 @@ export const CourseCatalogPage: React.FC = () => {
           >
             Reset Filter
           </Button>
-        </Card>
+        </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {courses.map((course) => (
-            <Card
+            <div
               key={course.id}
-              hoverable
-              className="flex flex-col justify-between p-6 space-y-5 border-2 border-slate-100 hover:border-brand-300"
+              className="glass-card rounded-2xl flex flex-col justify-between p-6 space-y-5 group"
             >
               <div className="space-y-4">
                 {/* Badges */}
@@ -182,7 +182,7 @@ export const CourseCatalogPage: React.FC = () => {
 
                 {/* Title & Description */}
                 <div>
-                  <h3 className="text-xl font-extrabold text-slate-900 group-hover:text-brand-600 transition-colors">
+                  <h3 className="text-xl font-black text-slate-800 group-hover:text-indigo-600 transition-colors">
                     {course.title}
                   </h3>
                   <p className="mt-2 text-xs sm:text-sm text-slate-500 line-clamp-2 leading-relaxed">
@@ -213,7 +213,7 @@ export const CourseCatalogPage: React.FC = () => {
                   <div className="pt-2 space-y-1.5">
                     <div className="flex justify-between text-xs font-bold text-slate-600">
                       <span>Progres Kamu</span>
-                      <span className="text-brand-600">
+                      <span className="text-indigo-600 font-extrabold">
                         {course.userProgress.progressPercent}% Selesai
                       </span>
                     </div>
@@ -227,17 +227,17 @@ export const CourseCatalogPage: React.FC = () => {
               </div>
 
               {/* Action Button */}
-              <div className="pt-4 border-t border-slate-100">
+              <div className="pt-4 border-t border-slate-200/70">
                 <Link to={`/courses/${course.slug}`}>
-                  <Button fullWidth variant="primary" className="gap-2">
+                  <button className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-bold text-sm bg-indigo-500 hover:bg-indigo-400 text-white shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 transition-all hover:-translate-y-0.5 btn-press">
                     {course.userProgress && course.userProgress.progressPercent > 0
                       ? 'Lanjutkan Belajar'
                       : 'Buka Kursus'}{' '}
                     <ArrowRight className="w-4 h-4" />
-                  </Button>
+                  </button>
                 </Link>
               </div>
-            </Card>
+            </div>
           ))}
         </div>
       )}

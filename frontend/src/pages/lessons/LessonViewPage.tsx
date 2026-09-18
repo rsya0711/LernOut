@@ -6,14 +6,13 @@ import {
   CheckCircle2,
   Zap,
   Clock,
-  Sparkles,
+  Star,
   ChevronRight,
   ChevronLeft,
   Award,
   AlertCircle,
 } from 'lucide-react';
 import { lessonsApi } from '../../api/lessons.api';
-import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
 
@@ -103,7 +102,7 @@ export const LessonViewPage: React.FC = () => {
             key={index}
             className="my-5 p-4 rounded-2xl bg-amber-50/80 border-2 border-amber-200 text-amber-950 font-medium text-sm flex gap-3 items-start"
           >
-            <Sparkles className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+            <Star className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
             <div>{trimmed.replace(/^>\s*/, '')}</div>
           </div>
         );
@@ -133,13 +132,13 @@ export const LessonViewPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 pb-28">
+    <div className="min-h-screen pb-28">
       {/* Top Header Navigation */}
-      <div className="sticky top-16 z-30 bg-white/95 backdrop-blur border-b border-slate-200">
+      <div className="sticky top-16 z-30 glass-nav border-b border-indigo-100/60">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
           <Link
             to={`/courses/${lesson.module.course.slug}`}
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-brand-600"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-indigo-600 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" /> {lesson.module.course.title}
           </Link>
@@ -158,11 +157,11 @@ export const LessonViewPage: React.FC = () => {
 
       {/* Main Lesson Article Container */}
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
-        <Card className="p-6 sm:p-10 border-2 border-slate-100 shadow-card bg-white">
+        <div className="glass-card rounded-3xl p-6 sm:p-10 border border-white/90 shadow-xl space-y-6">
           {/* Lesson Header */}
-          <div className="border-b border-slate-100 pb-6 mb-6 space-y-3">
+          <div className="border-b border-slate-200/70 pb-6 mb-6 space-y-3">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-brand-600 bg-brand-50 px-2.5 py-1 rounded-lg">
+              <span className="text-xs font-extrabold uppercase tracking-wider text-indigo-700 bg-indigo-50 border border-indigo-200 px-2.5 py-1 rounded-lg">
                 Pelajaran #{lesson.orderIndex + 1}
               </span>
               <span className="flex items-center gap-1 text-xs text-slate-400 font-semibold">
@@ -175,13 +174,13 @@ export const LessonViewPage: React.FC = () => {
               )}
             </div>
 
-            <h1 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight leading-snug">
+            <h1 className="text-2xl sm:text-4xl font-black text-slate-800 tracking-tight leading-snug">
               {lesson.title}
             </h1>
           </div>
 
           {/* Formatted Content */}
-          <div className="prose prose-slate max-w-none">
+          <div className="prose prose-slate max-w-none text-slate-700">
             {formatContentParagraphs(lesson.content)}
           </div>
 
@@ -189,7 +188,7 @@ export const LessonViewPage: React.FC = () => {
           {completionResult && (
             <div className="mt-8 p-6 rounded-2xl bg-gradient-to-r from-emerald-50 to-teal-50 border-2 border-emerald-300 animate-in fade-in zoom-in-95 duration-300">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-emerald-500 text-white flex items-center justify-center shadow-button-brand text-2xl">
+                <div className="w-12 h-12 rounded-2xl bg-emerald-500 text-white flex items-center justify-center shadow-lg text-2xl">
                   🎉
                 </div>
                 <div>
@@ -206,11 +205,11 @@ export const LessonViewPage: React.FC = () => {
               </div>
             </div>
           )}
-        </Card>
+        </div>
       </div>
 
       {/* Floating Bottom Action Bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur border-t-2 border-slate-100 p-4 shadow-xl">
+      <div className="fixed bottom-0 left-0 right-0 z-40 glass-nav border-t border-indigo-100/60 p-4 shadow-xl">
         <div className="max-w-3xl mx-auto flex items-center justify-between gap-4">
           {/* Previous Lesson */}
           {lesson.navigation.prevLesson ? (
@@ -227,33 +226,27 @@ export const LessonViewPage: React.FC = () => {
           {/* Complete / Next Action */}
           <div className="flex items-center gap-3">
             {!lesson.isCompleted && !completionResult && (
-              <Button
-                variant="primary"
-                size="lg"
-                className="gap-2 shadow-button-brand"
+              <button
                 onClick={() => completeMutation.mutate()}
-                isLoading={completeMutation.isPending}
+                disabled={completeMutation.isPending}
+                className="flex items-center gap-2 py-3 px-6 rounded-xl font-bold text-sm bg-indigo-500 hover:bg-indigo-400 text-white shadow-xl shadow-indigo-500/30 hover:shadow-indigo-500/50 transition-all hover:-translate-y-0.5 btn-press disabled:opacity-50"
               >
                 <CheckCircle2 className="w-5 h-5" />
                 <span>Tandai Selesai (+{lesson.xpReward} XP)</span>
-              </Button>
+              </button>
             )}
 
             {/* Next Lesson or Quiz button */}
             {lesson.navigation.nextLesson ? (
               <Link to={`/lessons/${lesson.navigation.nextLesson.id}`}>
-                <Button
-                  variant={lesson.isCompleted || completionResult ? 'primary' : 'outline'}
-                  size="lg"
-                  className="gap-1.5"
-                >
+                <button className="flex items-center gap-1.5 py-3 px-6 rounded-xl font-bold text-sm bg-indigo-500 hover:bg-indigo-400 text-white shadow-xl shadow-indigo-500/30 hover:shadow-indigo-500/50 transition-all hover:-translate-y-0.5 btn-press">
                   <span>Lanjut Pelajaran</span>
                   <ChevronRight className="w-4 h-4" />
-                </Button>
+                </button>
               </Link>
             ) : lesson.navigation.moduleQuiz ? (
               <Link to={`/quizzes/${lesson.navigation.moduleQuiz.id}`}>
-                <Button variant="streak" size="lg" className="gap-1.5 shadow-button-streak">
+                <Button variant="streak" size="lg" className="gap-1.5 shadow-lg shadow-orange-500/20">
                   <Award className="w-5 h-5" />
                   <span>Kuis Modul</span>
                   <ChevronRight className="w-4 h-4" />
@@ -261,10 +254,10 @@ export const LessonViewPage: React.FC = () => {
               </Link>
             ) : (
               <Link to={`/courses/${lesson.module.course.slug}`}>
-                <Button variant="primary" size="lg" className="gap-1.5">
+                <button className="flex items-center gap-1.5 py-3 px-6 rounded-xl font-bold text-sm bg-indigo-500 hover:bg-indigo-400 text-white shadow-xl shadow-indigo-500/30 transition-all btn-press">
                   <CheckCircle2 className="w-5 h-5" />
                   <span>Selesai Modul</span>
-                </Button>
+                </button>
               </Link>
             )}
           </div>

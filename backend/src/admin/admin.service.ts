@@ -129,4 +129,62 @@ export class AdminService {
   async deleteCourse(id: string) {
     return this.prisma.course.delete({ where: { id } });
   }
+
+  // --- Curriculum Management ---
+
+  async createModule(data: { courseId: string; title: string; description?: string; orderIndex: number }) {
+    return this.prisma.module.create({ data });
+  }
+
+  async deleteModule(id: string) {
+    return this.prisma.module.delete({ where: { id } });
+  }
+
+  async createLesson(data: {
+    moduleId: string;
+    title: string;
+    slug: string;
+    content: string;
+    durationMinutes: number;
+    xpReward: number;
+    orderIndex: number;
+  }) {
+    return this.prisma.lesson.create({ data });
+  }
+
+  async deleteLesson(id: string) {
+    return this.prisma.lesson.delete({ where: { id } });
+  }
+
+  async createQuiz(data: {
+    moduleId: string;
+    title: string;
+    description?: string;
+    passingScore: number;
+    xpReward: number;
+    orderIndex: number;
+  }) {
+    return this.prisma.quiz.create({ data });
+  }
+
+  async createQuestion(data: {
+    quizId: string;
+    prompt: string;
+    explanation?: string;
+    points: number;
+    type: any;
+    orderIndex: number;
+    categoryTag?: string;
+    options: { text: string; isCorrect: boolean; orderIndex: number }[];
+  }) {
+    const { options, ...questionData } = data;
+    return this.prisma.question.create({
+      data: {
+        ...questionData,
+        options: {
+          create: options,
+        },
+      },
+    });
+  }
 }

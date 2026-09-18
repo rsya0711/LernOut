@@ -5,10 +5,9 @@ import {
   GraduationCap,
   Clock,
   Award,
-  Sparkles,
+  Star,
 } from 'lucide-react';
 import { examsApi } from '../../api/exams.api';
-import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
 import { useAuth } from '../../contexts/AuthContext';
@@ -43,15 +42,18 @@ export const TryoutCatalogPage: React.FC = () => {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
       {/* Hero Header */}
-      <div className="bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 rounded-3xl p-8 sm:p-12 text-white shadow-2xl relative overflow-hidden">
+      <div className="glass-hero rounded-3xl p-8 sm:p-12 relative overflow-hidden space-y-4 shadow-xl border border-white/90">
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-10 w-72 h-72 bg-purple-500/15 rounded-full blur-3xl pointer-events-none" />
+
         <div className="relative z-10 max-w-3xl space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-200 text-xs font-black uppercase tracking-wide">
-            <Sparkles className="w-3.5 h-3.5 text-indigo-300" /> Simulasi UTBK Terpadu
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-700 text-xs font-black uppercase tracking-wide">
+            <Star className="w-3.5 h-3.5 fill-indigo-500 text-indigo-500" /> Simulasi UTBK Terpadu
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
-            Tryout UTBK / SNBT Berstandar Nasional
+          <h1 className="text-3xl sm:text-5xl font-black tracking-tight leading-tight text-slate-800">
+            Tryout <span className="text-shimmer">UTBK / SNBT</span> Berstandar Nasional
           </h1>
-          <p className="text-indigo-100 text-sm sm:text-base leading-relaxed max-w-2xl">
+          <p className="text-slate-500 text-sm sm:text-base leading-relaxed max-w-2xl">
             Simulasi ujian berwaktu dengan sistem penilaian IRT modern, navigasi palet soal, penandaan ragu-ragu, dan analisis kelemahan subtes secara otomatis.
           </p>
         </div>
@@ -60,7 +62,7 @@ export const TryoutCatalogPage: React.FC = () => {
       {/* Available Exam Packages */}
       <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-black text-slate-900 flex items-center gap-2">
+          <h2 className="text-2xl font-black text-slate-800 flex items-center gap-2">
             <GraduationCap className="w-6 h-6 text-indigo-600" /> Paket Simulasi Siap Dikerjakan
           </h2>
           <span className="text-xs font-bold text-slate-400">
@@ -70,9 +72,9 @@ export const TryoutCatalogPage: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {exams.map((exam) => (
-            <Card
+            <div
               key={exam.id}
-              className="p-6 sm:p-8 border-2 border-slate-100 hover:border-indigo-300 shadow-card flex flex-col justify-between space-y-6"
+              className="glass-card rounded-2xl p-6 sm:p-8 flex flex-col justify-between space-y-6"
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
@@ -85,7 +87,7 @@ export const TryoutCatalogPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-extrabold text-slate-900 leading-snug">
+                  <h3 className="text-xl font-black text-slate-800 leading-snug">
                     {exam.title}
                   </h3>
                   <p className="mt-2 text-xs sm:text-sm text-slate-500 leading-relaxed">
@@ -93,7 +95,7 @@ export const TryoutCatalogPage: React.FC = () => {
                   </p>
                 </div>
 
-                <div className="flex items-center gap-4 text-xs font-bold text-slate-500 pt-2 border-t border-slate-100">
+                <div className="flex items-center gap-4 text-xs font-bold text-slate-500 pt-2 border-t border-slate-200/70">
                   <span>{exam.totalQuestions} Butir Soal</span>
                   <span>•</span>
                   <span>Target Skor: {exam.passingScore}</span>
@@ -109,11 +111,8 @@ export const TryoutCatalogPage: React.FC = () => {
               </div>
 
               <div className="pt-2 flex items-center gap-3">
-                <Button
-                  fullWidth
-                  variant="exam"
-                  size="lg"
-                  className="gap-2 shadow-button-exam"
+                <button
+                  className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-bold text-sm bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-xl shadow-indigo-500/25 hover:shadow-indigo-500/40 transition-all hover:-translate-y-0.5 btn-press"
                   onClick={() => {
                     if (!isAuthenticated) {
                       navigate('/login');
@@ -124,17 +123,17 @@ export const TryoutCatalogPage: React.FC = () => {
                 >
                   <GraduationCap className="w-5 h-5" />
                   Mulai Simulasi Tryout
-                </Button>
+                </button>
 
                 {exam.lastAttemptId && (
                   <Link to={`/tryout/result/${exam.lastAttemptId}`}>
-                    <Button variant="outline" size="lg" className="text-xs px-3">
+                    <Button variant="secondary" size="lg" className="text-xs px-3">
                       Review
                     </Button>
                   </Link>
                 )}
               </div>
-            </Card>
+            </div>
           ))}
         </div>
       </div>
@@ -142,19 +141,19 @@ export const TryoutCatalogPage: React.FC = () => {
       {/* Tryout Attempt History */}
       {history.length > 0 && (
         <div className="space-y-4 pt-6">
-          <h2 className="text-xl font-black text-slate-900 flex items-center gap-2">
+          <h2 className="text-xl font-black text-slate-800 flex items-center gap-2">
             <Award className="w-5 h-5 text-amber-500" /> Riwayat Tryout Kamu
           </h2>
 
-          <Card className="p-0 border-2 border-slate-100 overflow-hidden">
+          <div className="glass-card rounded-2xl p-0 overflow-hidden border border-white/90 shadow-sm">
             <div className="divide-y divide-slate-100">
               {history.map((att: any) => (
                 <div
                   key={att.id}
-                  className="p-5 flex items-center justify-between hover:bg-slate-50 transition-colors"
+                  className="p-5 flex items-center justify-between hover:bg-indigo-50/30 transition-colors"
                 >
                   <div>
-                    <h4 className="text-sm font-extrabold text-slate-900">{att.title}</h4>
+                    <h4 className="text-sm font-extrabold text-slate-800">{att.title}</h4>
                     <span className="text-xs text-slate-400 font-semibold">
                       Selesai: {new Date(att.submittedAt).toLocaleDateString('id-ID')}
                     </span>
@@ -173,7 +172,7 @@ export const TryoutCatalogPage: React.FC = () => {
                 </div>
               ))}
             </div>
-          </Card>
+          </div>
         </div>
       )}
     </div>

@@ -81,91 +81,96 @@ export const CourseDetailPage: React.FC = () => {
       <div>
         <Link
           to="/courses"
-          className="inline-flex items-center gap-1.5 text-xs font-extrabold text-slate-500 hover:text-brand-600 transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs font-extrabold text-slate-500 hover:text-indigo-600 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" /> Kembali ke Katalog Kursus
         </Link>
       </div>
 
       {/* Course Header Banner */}
-      <div className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-slate-100 shadow-card space-y-6">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <Badge variant="brand">{course.category.name}</Badge>
-            <Badge variant={course.level === 'UTBK' ? 'exam' : 'neutral'}>
-              Level: {course.level}
-            </Badge>
-          </div>
-          <div className="flex items-center gap-2 text-xs font-bold text-slate-500">
-            <span className="flex items-center gap-1">
-              <Layers className="w-4 h-4 text-slate-400" /> {course.modules.length} Modul
-            </span>
-            <span>•</span>
-            <span className="flex items-center gap-1">
-              <BookOpen className="w-4 h-4 text-slate-400" /> {course.totalLessons} Pelajaran
-            </span>
-          </div>
-        </div>
+      <div className="glass-hero rounded-3xl p-6 sm:p-10 relative overflow-hidden space-y-6">
+        <div className="absolute top-0 right-10 w-80 h-80 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-10 w-72 h-72 bg-purple-500/15 rounded-full blur-3xl pointer-events-none" />
 
-        <div>
-          <h1 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
-            {course.title}
-          </h1>
-          <p className="mt-3 text-slate-600 text-sm sm:text-base leading-relaxed max-w-3xl">
-            {course.description}
-          </p>
-        </div>
-
-        {/* Progress & CTA */}
-        <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="w-full sm:w-1/2 space-y-2">
-            <div className="flex justify-between text-xs font-bold text-slate-600">
-              <span>Progres Belajar</span>
-              <span className="text-brand-600 font-extrabold">
-                {course.completedLessons} dari {course.totalLessons} Selesai (
-                {course.totalLessons > 0
-                  ? Math.round((course.completedLessons / course.totalLessons) * 100)
-                  : 0}
-                %)
+        <div className="relative z-10 space-y-6">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <Badge variant="brand">{course.category.name}</Badge>
+              <Badge variant={course.level === 'UTBK' ? 'exam' : 'neutral'}>
+                Level: {course.level}
+              </Badge>
+            </div>
+            <div className="flex items-center gap-2 text-xs font-bold text-slate-400">
+              <span className="flex items-center gap-1">
+                <Layers className="w-4 h-4 text-slate-400" /> {course.modules.length} Modul
+              </span>
+              <span>•</span>
+              <span className="flex items-center gap-1">
+                <BookOpen className="w-4 h-4 text-slate-400" /> {course.totalLessons} Pelajaran
               </span>
             </div>
-            <ProgressBar
-              value={
-                course.totalLessons > 0
-                  ? Math.round((course.completedLessons / course.totalLessons) * 100)
-                  : 0
-              }
-              variant="brand"
-            />
           </div>
 
-          {nextTargetLessonId && (
-            <Link to={`/lessons/${nextTargetLessonId}`}>
-              <Button size="lg" variant="primary" className="gap-2 shadow-button-brand w-full sm:w-auto">
-                <PlayCircle className="w-5 h-5" />
-                {course.completedLessons > 0 ? 'Lanjutkan Belajar' : 'Mulai Belajar Sekarang'}
-              </Button>
-            </Link>
-          )}
+          <div>
+            <h1 className="text-2xl sm:text-4xl font-black text-slate-800 tracking-tight leading-snug">
+              {course.title}
+            </h1>
+            <p className="mt-3 text-slate-600 text-sm sm:text-base leading-relaxed max-w-3xl">
+              {course.description}
+            </p>
+          </div>
+
+          {/* Progress & CTA */}
+          <div className="pt-4 border-t border-slate-200/70 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="w-full sm:w-1/2 space-y-2">
+              <div className="flex justify-between text-xs font-bold text-slate-600">
+                <span>Progres Belajar</span>
+                <span className="text-indigo-600 font-extrabold">
+                  {course.completedLessons} dari {course.totalLessons} Selesai (
+                  {course.totalLessons > 0
+                    ? Math.round((course.completedLessons / course.totalLessons) * 100)
+                    : 0}
+                  %)
+                </span>
+              </div>
+              <ProgressBar
+                value={
+                  course.totalLessons > 0
+                    ? Math.round((course.completedLessons / course.totalLessons) * 100)
+                    : 0
+                }
+                variant="brand"
+              />
+            </div>
+
+            {nextTargetLessonId && (
+              <Link to={`/lessons/${nextTargetLessonId}`}>
+                <button className="flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-bold text-sm bg-indigo-500 hover:bg-indigo-400 text-white shadow-xl shadow-indigo-500/30 hover:shadow-indigo-500/50 transition-all hover:-translate-y-0.5 btn-press w-full sm:w-auto">
+                  <PlayCircle className="w-5 h-5" />
+                  {course.completedLessons > 0 ? 'Lanjutkan Belajar' : 'Mulai Belajar Sekarang'}
+                </button>
+              </Link>
+            )}
+          </div>
         </div>
       </div>
 
       {/* Modules and Lessons Tree */}
       <div className="space-y-6">
         <h2 className="text-xl font-black text-slate-800 flex items-center gap-2">
-          <Layers className="w-5 h-5 text-brand-600" /> Kurikulum & Alur Pembelajaran
+          <Layers className="w-5 h-5 text-indigo-600" /> Kurikulum &amp; Alur <span className="text-shimmer">Pembelajaran</span>
         </h2>
 
         <div className="space-y-6">
           {course.modules.map((module, modIdx) => (
             <div
               key={module.id}
-              className="bg-white rounded-2xl border-2 border-slate-100 shadow-sm overflow-hidden"
+              className="glass-card rounded-2xl overflow-hidden border border-white/90 shadow-sm"
             >
               {/* Module Header */}
-              <div className="bg-slate-50/80 px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+              <div className="bg-white/50 px-6 py-4 border-b border-slate-200/60 flex items-center justify-between">
                 <div>
-                  <span className="text-[11px] font-black uppercase tracking-wider text-brand-700 bg-brand-100 px-2 py-0.5 rounded">
+                  <span className="text-[11px] font-black uppercase tracking-wider text-indigo-700 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded">
                     Modul {modIdx + 1}
                   </span>
                   <h3 className="text-base sm:text-lg font-extrabold text-slate-800 mt-1">
@@ -186,14 +191,14 @@ export const CourseDetailPage: React.FC = () => {
                   <Link
                     key={lesson.id}
                     to={`/lessons/${lesson.id}`}
-                    className="flex items-center justify-between p-4 sm:p-5 hover:bg-brand-50/50 transition-colors group"
+                    className="flex items-center justify-between p-4 sm:p-5 hover:bg-indigo-50/50 transition-colors group"
                   >
                     <div className="flex items-center gap-3.5">
                       <div
                         className={`w-9 h-9 rounded-xl flex items-center justify-center font-black text-xs transition-transform group-hover:scale-110 ${
                           lesson.isCompleted
                             ? 'bg-emerald-100 text-emerald-700'
-                            : 'bg-slate-100 text-slate-600 group-hover:bg-brand-500 group-hover:text-white'
+                            : 'bg-slate-100 text-slate-600 group-hover:bg-indigo-600 group-hover:text-white'
                         }`}
                       >
                         {lesson.isCompleted ? (
@@ -204,7 +209,7 @@ export const CourseDetailPage: React.FC = () => {
                       </div>
 
                       <div>
-                        <h4 className="text-sm font-bold text-slate-800 group-hover:text-brand-700 transition-colors">
+                        <h4 className="text-sm font-bold text-slate-800 group-hover:text-indigo-600 transition-colors">
                           {lesson.title}
                         </h4>
                         <div className="flex items-center gap-3 text-xs text-slate-400 mt-0.5">
@@ -224,7 +229,7 @@ export const CourseDetailPage: React.FC = () => {
                           Selesai ✓
                         </span>
                       ) : (
-                        <span className="text-xs font-bold text-brand-700 bg-brand-50 px-3 py-1.5 rounded-xl group-hover:bg-brand-500 group-hover:text-white transition-colors">
+                        <span className="text-xs font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 px-3 py-1.5 rounded-xl group-hover:bg-indigo-600 group-hover:text-white group-hover:border-transparent transition-colors">
                           Pelajari →
                         </span>
                       )}
@@ -236,18 +241,18 @@ export const CourseDetailPage: React.FC = () => {
                 {module.quizzes.map((quiz) => (
                   <div
                     key={quiz.id}
-                    className="p-4 sm:p-5 bg-amber-50/40 flex items-center justify-between border-t-2 border-dashed border-amber-200"
+                    className="p-4 sm:p-5 bg-amber-50/40 flex items-center justify-between border-t border-dashed border-amber-200"
                   >
                     <div className="flex items-center gap-3.5">
-                      <div className="w-9 h-9 rounded-xl bg-amber-500 text-white flex items-center justify-center shadow-button-streak">
+                      <div className="w-9 h-9 rounded-xl bg-amber-500 text-white flex items-center justify-center shadow-lg shadow-orange-500/20">
                         <Award className="w-5 h-5" />
                       </div>
                       <div>
                         <div className="flex items-center gap-2">
-                          <h4 className="text-sm font-extrabold text-slate-900">
+                          <h4 className="text-sm font-extrabold text-slate-800">
                             {quiz.title}
                           </h4>
-                          <span className="text-[10px] font-black uppercase tracking-wider bg-amber-200 text-amber-900 px-1.5 py-0.5 rounded">
+                          <span className="text-[10px] font-black uppercase tracking-wider bg-amber-100 text-amber-900 border border-amber-200 px-1.5 py-0.5 rounded">
                             Evaluasi Modul
                           </span>
                         </div>
@@ -258,7 +263,7 @@ export const CourseDetailPage: React.FC = () => {
                     </div>
 
                     <Link to={`/quizzes/${quiz.id}`}>
-                      <Button size="sm" variant="streak" className="text-xs">
+                      <Button size="sm" variant="streak" className="text-xs font-bold">
                         Mulai Kuis (+{quiz.xpReward} XP)
                       </Button>
                     </Link>

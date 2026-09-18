@@ -61,4 +61,40 @@ export class AdminController {
   deleteCourse(@Param('id') id: string) {
     return this.adminService.deleteCourse(id);
   }
+
+  // --- Curriculum Builder Endpoints ---
+
+  @Post('modules')
+  @ApiOperation({ summary: 'Tambah modul ke kursus' })
+  createModule(@Body() data: any) {
+    return this.adminService.createModule(data);
+  }
+
+  @Delete('modules/:id')
+  deleteModule(@Param('id') id: string) {
+    return this.adminService.deleteModule(id);
+  }
+
+  @Post('lessons')
+  @ApiOperation({ summary: 'Tambah pelajaran ke modul' })
+  createLesson(@Body() data: any) {
+    return this.adminService.createLesson(data);
+  }
+
+  @Delete('lessons/:id')
+  deleteLesson(@Param('id') id: string) {
+    return this.adminService.deleteLesson(id);
+  }
+
+  @Post('quizzes')
+  @ApiOperation({ summary: 'Tambah kuis evaluasi ke modul' })
+  createQuiz(@Body() data: any) {
+    return this.adminService.createQuiz(data);
+  }
+
+  @Post('questions')
+  @ApiOperation({ summary: 'Tambah soal ke kuis' })
+  createQuestion(@Body() data: any) {
+    return this.adminService.createQuestion(data);
+  }
 }

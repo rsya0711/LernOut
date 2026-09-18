@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { Button } from '../../components/ui/Button';
-import { Card } from '../../components/ui/Card';
-import { Sparkles, Eye, EyeOff, UserPlus, AlertCircle, Loader2, CheckCircle2 } from 'lucide-react';
+import { Star, Eye, EyeOff, UserPlus, AlertCircle, Loader2, CheckCircle2 } from 'lucide-react';
 
 export const RegisterPage: React.FC = () => {
   const { register } = useAuth();
@@ -54,18 +52,20 @@ export const RegisterPage: React.FC = () => {
       <div className="w-full max-w-md space-y-6">
         {/* Brand Header */}
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 border border-brand-200 text-brand-700 text-xs font-extrabold mb-1">
-            <Sparkles className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-700 text-xs font-extrabold mb-1">
+            <Star className="w-3.5 h-3.5" />
             Mulai Perjalanan Belajar
           </div>
-          <h1 className="text-3xl font-black text-slate-800 tracking-tight">Buat Akun Baru</h1>
+          <h1 className="text-3xl font-black text-slate-800 tracking-tight">
+            Buat <span className="text-shimmer">Akun Baru</span>
+          </h1>
           <p className="text-sm text-slate-500">
             Daftar gratis, pelajari ribuan materi UTBK dan kumpulkan XP pertamamu.
           </p>
         </div>
 
         {/* Register Form Card */}
-        <Card className="p-8 shadow-card border-2 border-slate-100 space-y-6 bg-white">
+        <div className="glass-card rounded-3xl p-8 space-y-6 shadow-xl">
           {error && (
             <div className="p-3.5 bg-rose-50 border border-rose-200 text-rose-700 rounded-xl text-xs sm:text-sm font-semibold flex items-start gap-2.5">
               <AlertCircle className="w-5 h-5 text-rose-500 shrink-0 mt-0.5" />
@@ -84,7 +84,7 @@ export const RegisterPage: React.FC = () => {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="contoh: Budi Santoso"
-                className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 text-sm font-medium text-slate-900 focus:outline-none focus:border-brand-500 transition-colors"
+                className="w-full px-4 py-3 rounded-xl bg-white/80 border border-slate-200 text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 transition-all"
               />
             </div>
 
@@ -98,7 +98,7 @@ export const RegisterPage: React.FC = () => {
                 value={username}
                 onChange={(e) => setUsername(e.target.value.toLowerCase().replace(/\s+/g, ''))}
                 placeholder="contoh: budisantoso"
-                className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 text-sm font-medium text-slate-900 focus:outline-none focus:border-brand-500 transition-colors"
+                className="w-full px-4 py-3 rounded-xl bg-white/80 border border-slate-200 text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 transition-all"
               />
             </div>
 
@@ -112,7 +112,7 @@ export const RegisterPage: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="contoh: budi@gmail.com"
-                className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 text-sm font-medium text-slate-900 focus:outline-none focus:border-brand-500 transition-colors"
+                className="w-full px-4 py-3 rounded-xl bg-white/80 border border-slate-200 text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 transition-all"
               />
             </div>
 
@@ -127,12 +127,12 @@ export const RegisterPage: React.FC = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full px-4 py-3 pr-11 rounded-xl border-2 border-slate-200 text-sm font-medium text-slate-900 focus:outline-none focus:border-brand-500 transition-colors"
+                  className="w-full px-4 py-3 pr-11 rounded-xl bg-white/80 border border-slate-200 text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 transition-all"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
                 >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
@@ -149,16 +149,14 @@ export const RegisterPage: React.FC = () => {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 text-sm font-medium text-slate-900 focus:outline-none focus:border-brand-500 transition-colors"
+                className="w-full px-4 py-3 rounded-xl bg-white/80 border border-slate-200 text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 transition-all"
               />
             </div>
 
-            <Button
+            <button
               type="submit"
-              variant="primary"
-              size="lg"
               disabled={isSubmitting}
-              className="w-full gap-2 shadow-button-brand font-bold text-white mt-3"
+              className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-bold text-sm bg-indigo-500 hover:bg-indigo-400 text-white shadow-xl shadow-indigo-500/30 hover:shadow-indigo-500/50 transition-all hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed mt-3 btn-press"
             >
               {isSubmitting ? (
                 <>
@@ -169,19 +167,19 @@ export const RegisterPage: React.FC = () => {
                   <UserPlus className="w-5 h-5" /> Buat Akun LearnOut
                 </>
               )}
-            </Button>
+            </button>
           </form>
 
           <div className="pt-2 text-[11px] text-slate-400 text-center flex items-center justify-center gap-1">
             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
             Data kamu terlindungi dengan enkripsi standar industri.
           </div>
-        </Card>
+        </div>
 
         {/* Footer Link */}
         <p className="text-center text-xs sm:text-sm text-slate-500 font-semibold">
           Sudah memiliki akun?{' '}
-          <Link to="/login" className="text-brand-600 font-extrabold hover:underline">
+          <Link to="/login" className="text-indigo-600 font-extrabold hover:text-indigo-700 transition-colors">
             Masuk di sini
           </Link>
         </p>

@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import {
-  Sparkles,
+  Star,
   CheckCircle2,
   X,
   CreditCard,
 } from 'lucide-react';
-import { Card } from './Card';
 import { Button } from './Button';
 import { Badge } from './Badge';
 
@@ -28,12 +27,12 @@ export const PremiumModal: React.FC<PremiumModalProps> = ({ isOpen, onClose }) =
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200">
-      <Card className="max-w-md w-full p-6 sm:p-8 bg-white shadow-2xl relative space-y-6">
+    <div className="fixed inset-0 z-50 bg-slate-950/40 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200">
+      <div className="max-w-md w-full p-6 sm:p-8 glass-hero rounded-3xl shadow-2xl relative space-y-6 border border-white/90">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 text-slate-400 hover:text-slate-600 p-1.5 rounded-xl hover:bg-slate-100"
+          className="absolute right-4 top-4 text-slate-400 hover:text-slate-600 p-1.5 rounded-xl hover:bg-slate-100/80 transition-colors"
         >
           <X className="w-5 h-5" />
         </button>
@@ -54,11 +53,11 @@ export const PremiumModal: React.FC<PremiumModalProps> = ({ isOpen, onClose }) =
           <>
             {/* Header */}
             <div className="text-center space-y-2">
-              <Badge variant="streak" size="sm" className="bg-amber-400 text-slate-900 border-none font-black">
-                <Sparkles className="w-3.5 h-3.5 fill-slate-900" /> LEARN OUT PRO
+              <Badge variant="streak" size="sm" className="bg-amber-100 text-amber-900 border-amber-200 font-black">
+                <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" /> LEARN OUT PRO
               </Badge>
-              <h2 className="text-2xl font-black text-slate-900 tracking-tight">
-                Tingkatkan Skor UTBK Hingga Maksimal
+              <h2 className="text-2xl font-black text-slate-800 tracking-tight">
+                Tingkatkan Skor <span className="text-shimmer">UTBK</span> Hingga Maksimal
               </h2>
               <p className="text-xs text-slate-500">
                 Akses tanpa batas ke seluruh modul, tryout berkala, dan fitur akselerasi belajar.
@@ -112,7 +111,7 @@ export const PremiumModal: React.FC<PremiumModalProps> = ({ isOpen, onClose }) =
             </div>
           </>
         )}
-      </Card>
+      </div>
     </div>
   );
 };

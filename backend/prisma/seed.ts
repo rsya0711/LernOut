@@ -145,74 +145,40 @@ async function main() {
 
   // 4. Seed Categories & Courses
   console.log('📚 Seeding Categories and Courses...');
+  const catAkademik = await prisma.category.create({
+    data: { name: '🎓 Akademik', slug: 'akademik', description: 'Mata pelajaran akademik sekolah.', icon: 'GraduationCap', orderIndex: 1 },
+  });
+
   const catUtbk = await prisma.category.create({
-    data: {
-      name: 'UTBK / SNBT 2026',
-      slug: 'utbk-snbt',
-      description: 'Tes Potensi Skolastik (TPS), Literasi Bahasa, dan Penalaran Matematika.',
-      icon: 'GraduationCap',
-      orderIndex: 1,
-    },
+    data: { name: '📝 UTBK / SNBT', slug: 'utbk-snbt', description: 'Persiapan ujian tulis berbasis komputer.', icon: 'BookOpen', orderIndex: 2 },
   });
 
-  const catMath = await prisma.category.create({
-    data: {
-      name: 'Matematika & Logika',
-      slug: 'matematika',
-      description: 'Fondasi aljabar, kalkulus, geometri, dan pola berpikir analitis.',
-      icon: 'BrainCircuit',
-      orderIndex: 2,
-    },
-  });
-
-  const catEnglish = await prisma.category.create({
-    data: {
-      name: 'Bahasa Inggris',
-      slug: 'bahasa-inggris',
-      description: 'Grammar mastery, reading comprehension, dan vocabulary booster.',
-      icon: 'Globe',
-      orderIndex: 3,
-    },
-  });
-
-  const catProg = await prisma.category.create({
-    data: {
-      name: 'Pemrograman Web',
-      slug: 'programming',
-      description: 'JavaScript, TypeScript, React, algoritma pemrograman, dan problem solving.',
-      icon: 'Code',
-      orderIndex: 4,
-    },
-  });
-
-  // Course 1: UTBK TPS & Literasi
-  const courseUtbk = await prisma.course.create({
-    data: {
-      categoryId: catUtbk.id,
-      title: 'Mastery UTBK TPS & Literasi 2026',
-      slug: 'mastery-utbk-tps-literasi-2026',
-      description:
-        'Kuasai seluruh komponen Tes Potensi Skolastik (TPS): Penalaran Umum, Pengetahuan Kuantitatif, Pemahaman Bacaan & Menulis, serta Literasi Bahasa.',
-      level: CourseLevel.UTBK,
-      isPublished: true,
-      orderIndex: 1,
-      thumbnail: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&auto=format&fit=crop&q=80',
-    },
-  });
-
-  // Course 2: Aljabar & Logika
+  // Akademik Courses
   const courseMath = await prisma.course.create({
-    data: {
-      categoryId: catMath.id,
-      title: 'Fondasi Aljabar & Penalaran Kuantitatif',
-      slug: 'fondasi-aljabar-penalaran-kuantitatif',
-      description:
-        'Belajar logika matematika dan pola bilangan dari konsep dasar hingga teknik hitung cepat tanpa kalkulator.',
-      level: CourseLevel.BEGINNER,
-      isPublished: true,
-      orderIndex: 2,
-      thumbnail: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?w=600&auto=format&fit=crop&q=80',
-    },
+    data: { categoryId: catAkademik.id, title: 'Matematika', slug: 'matematika', description: 'Pelajari konsep matematika dari dasar hingga lanjut.', level: CourseLevel.BEGINNER, isPublished: true, orderIndex: 1, thumbnail: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?w=600&auto=format&fit=crop&q=80' },
+  });
+  await prisma.course.create({
+    data: { categoryId: catAkademik.id, title: 'Fisika', slug: 'fisika', description: 'Memahami fenomena alam dan hukum fisika.', level: CourseLevel.BEGINNER, isPublished: true, orderIndex: 2 },
+  });
+  await prisma.course.create({
+    data: { categoryId: catAkademik.id, title: 'Kimia', slug: 'kimia', description: 'Reaksi kimia dan unsur-unsurnya.', level: CourseLevel.BEGINNER, isPublished: true, orderIndex: 3 },
+  });
+  await prisma.course.create({
+    data: { categoryId: catAkademik.id, title: 'Biologi', slug: 'biologi', description: 'Ilmu tentang kehidupan dan organisme hidup.', level: CourseLevel.BEGINNER, isPublished: true, orderIndex: 4 },
+  });
+
+  // UTBK Courses
+  const courseUtbk = await prisma.course.create({
+    data: { categoryId: catUtbk.id, title: 'Penalaran', slug: 'penalaran', description: 'Penalaran umum dan matematika untuk UTBK.', level: CourseLevel.UTBK, isPublished: true, orderIndex: 1, thumbnail: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&auto=format&fit=crop&q=80' },
+  });
+  await prisma.course.create({
+    data: { categoryId: catUtbk.id, title: 'Literasi', slug: 'literasi', description: 'Literasi bahasa Indonesia dan bahasa Inggris.', level: CourseLevel.UTBK, isPublished: true, orderIndex: 2 },
+  });
+  await prisma.course.create({
+    data: { categoryId: catUtbk.id, title: 'Tryout', slug: 'tryout', description: 'Simulasi ujian Tryout UTBK sesungguhnya.', level: CourseLevel.UTBK, isPublished: true, orderIndex: 3 },
+  });
+  await prisma.course.create({
+    data: { categoryId: catUtbk.id, title: 'Bank Soal', slug: 'bank-soal', description: 'Kumpulan soal latihan UTBK tahun-tahun sebelumnya.', level: CourseLevel.UTBK, isPublished: true, orderIndex: 4 },
   });
 
   // 5. Seed Modules for UTBK Course
@@ -397,6 +363,120 @@ Pola: Setiap suku adalah jumlah dari 2 suku sebelumnya (Barisan Fibonacci). Suku
     ],
   });
 
+  // --- SEED MODULES FOR FONDASI ALJABAR (courseMath) ---
+  console.log('📐 Seeding Modules for Fondasi Aljabar...');
+  const moduleMathDasar1 = await prisma.module.create({
+    data: {
+      courseId: courseMath.id,
+      title: 'Modul 1: Operasi Bilangan & Sifat Akar/Pangkat',
+      description: 'Kembali ke dasar. Pahami operasi eksponen, bentuk akar, dan pecahan tanpa kalkulator.',
+      orderIndex: 1,
+    },
+  });
+
+  await prisma.lesson.create({
+    data: {
+      moduleId: moduleMathDasar1.id,
+      title: 'Sifat-sifat Eksponen (Pangkat)',
+      slug: 'sifat-eksponen',
+      orderIndex: 1,
+      xpReward: 20,
+      durationMinutes: 6,
+      content: `### Apa itu Eksponen?
+Eksponen atau pangkat adalah perkalian berulang dari suatu bilangan.
+
+#### Sifat-sifat Penting:
+1. **Perkalian**: $a^m \\times a^n = a^{m+n}$
+   (Contoh: $2^3 \\times 2^4 = 2^7$)
+2. **Pembagian**: $a^m / a^n = a^{m-n}$
+3. **Pangkat Dipangkatkan**: $(a^m)^n = a^{m \\times n}$
+4. **Pangkat Nol**: $a^0 = 1$ (untuk a ≠ 0)
+5. **Pangkat Negatif**: $a^{-n} = 1 / a^n$
+
+> **Kesalahan Umum!**
+> Jangan tertukar antara $(2+3)^2$ dengan $2^2 + 3^2$.
+> Benar: $(2+3)^2 = 5^2 = 25$.
+> Salah: $2^2 + 3^2 = 4 + 9 = 13$. (Berbeda!)`,
+    },
+  });
+
+  await prisma.lesson.create({
+    data: {
+      moduleId: moduleMathDasar1.id,
+      title: 'Merasionalkan Bentuk Akar',
+      slug: 'rasional-bentuk-akar',
+      orderIndex: 2,
+      xpReward: 25,
+      durationMinutes: 8,
+      content: `### Mengapa Harus Dirasionalkan?
+Dalam matematika, membiarkan bentuk akar di bagian penyebut (bawah pecahan) dianggap tidak "sederhana". Kita harus merasionalkannya.
+
+#### Cara Merasionalkan Akar Tunggal:
+Jika bentuknya $a / \\sqrt{b}$, kalikan atas dan bawah dengan $\\sqrt{b}$.
+Contoh: $2 / \\sqrt{3} = (2 \\times \\sqrt{3}) / (\\sqrt{3} \\times \\sqrt{3}) = (2\\sqrt{3}) / 3$.
+
+#### Cara Merasionalkan Akar Ganda (Kali Akar Sekawan):
+Jika penyebutnya berbentuk $(a + \\sqrt{b})$, maka kalikan dengan **akar sekawannya** yaitu $(a - \\sqrt{b})$.
+Konsep ini menggunakan rumus selisih kuadrat: $(x+y)(x-y) = x^2 - y^2$.
+
+> **Latihan Cepat:**
+> Rasionalkan $1 / (\\sqrt{5} - \\sqrt{2})$
+> Jawab: Kalikan dengan $(\\sqrt{5} + \\sqrt{2}) / (\\sqrt{5} + \\sqrt{2})$.
+> Hasil bawahnya menjadi: $5 - 2 = 3$. Hasil akhir: $(\\sqrt{5} + \\sqrt{2}) / 3$.`,
+    },
+  });
+
+  const quizMathDasar1 = await prisma.quiz.create({
+    data: {
+      moduleId: moduleMathDasar1.id,
+      title: 'Kuis Evaluasi: Eksponen & Akar',
+      description: 'Latihan soal hitung cepat eksponen dan merasionalkan akar.',
+      passingScore: 75,
+      xpReward: 60,
+      orderIndex: 1,
+    },
+  });
+
+  const qMathDasar1 = await prisma.question.create({
+    data: {
+      quizId: quizMathDasar1.id,
+      prompt: 'Berapakah nilai dari (2^3 × 2^5) / 2^6 ?',
+      explanation: 'Sifat perkalian: pangkat ditambah (3+5 = 8). Sifat pembagian: pangkat dikurang (8-6 = 2). Maka hasilnya 2^2 = 4.',
+      points: 50,
+      type: QuestionType.MULTIPLE_CHOICE,
+      orderIndex: 1,
+      categoryTag: 'Eksponen',
+    },
+  });
+  await prisma.option.createMany({
+    data: [
+      { questionId: qMathDasar1.id, text: '4', isCorrect: true, orderIndex: 1 },
+      { questionId: qMathDasar1.id, text: '2', isCorrect: false, orderIndex: 2 },
+      { questionId: qMathDasar1.id, text: '8', isCorrect: false, orderIndex: 3 },
+      { questionId: qMathDasar1.id, text: '16', isCorrect: false, orderIndex: 4 },
+    ],
+  });
+
+  const qMathDasar2 = await prisma.question.create({
+    data: {
+      quizId: quizMathDasar1.id,
+      prompt: 'Bentuk sederhana dari 3 / (√5 + √2) adalah...',
+      explanation: 'Kalikan dengan akar sekawan (√5 - √2). Penyebut menjadi (5 - 2) = 3. Maka pembilang 3(√5 - √2) dibagi 3 = √5 - √2.',
+      points: 50,
+      type: QuestionType.MULTIPLE_CHOICE,
+      orderIndex: 2,
+      categoryTag: 'Bentuk Akar',
+    },
+  });
+  await prisma.option.createMany({
+    data: [
+      { questionId: qMathDasar2.id, text: '√5 - √2', isCorrect: true, orderIndex: 1 },
+      { questionId: qMathDasar2.id, text: '√5 + √2', isCorrect: false, orderIndex: 2 },
+      { questionId: qMathDasar2.id, text: '3(√5 - √2)', isCorrect: false, orderIndex: 3 },
+      { questionId: qMathDasar2.id, text: '√3', isCorrect: false, orderIndex: 4 },
+    ],
+  });
+
   // 7. Seed UTBK Tryout Simulation Package
   console.log('🎯 Seeding UTBK Tryout Simulation Package...');
   const tryoutUtbk = await prisma.examTryout.create({
@@ -511,6 +591,141 @@ Pola: Setiap suku adalah jumlah dari 2 suku sebelumnya (Barisan Fibonacci). Suku
       });
     }
   }
+
+  // --- NEW COURSE: BAHASA INGGRIS ---
+  const courseEnglish = await prisma.course.create({
+    data: {
+      categoryId: catAkademik.id,
+      title: 'Bahasa',
+      slug: 'bahasa',
+      description: 'Tingkatkan kemampuan bahasa Indonesia dan Inggrismu dengan materi Grammar dan Reading.',
+      level: CourseLevel.INTERMEDIATE,
+      isPublished: true,
+      orderIndex: 5,
+      thumbnail: 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=600&auto=format&fit=crop&q=80',
+    },
+  });
+
+  const moduleEng1 = await prisma.module.create({
+    data: {
+      courseId: courseEnglish.id,
+      title: 'Modul 1: Tenses & Sentence Structure',
+      description: 'Memahami dasar pembentukan kalimat dalam berbagai waktu (tenses).',
+      orderIndex: 1,
+    },
+  });
+
+  await prisma.lesson.create({
+    data: {
+      moduleId: moduleEng1.id,
+      title: 'Present Simple vs Present Continuous',
+      slug: 'present-simple-vs-continuous',
+      orderIndex: 1,
+      xpReward: 15,
+      durationMinutes: 5,
+      content: `### Present Simple vs Present Continuous
+Tenses dasar ini sering membingungkan! Mari kita bahas perbedaannya.
+
+#### 1. Present Simple
+Digunakan untuk **fakta umum** atau **kebiasaan (rutinitas)**.
+- **Pola**: Subject + V1 (s/es) + Object
+- **Contoh**: She *works* in a hospital. (Fakta/Pekerjaan tetap)
+- **Kata Kunci (Time Signals)**: usually, always, every day, sometimes.
+
+#### 2. Present Continuous
+Digunakan untuk aksi yang **sedang terjadi saat ini** atau **sementara**.
+- **Pola**: Subject + to be (is/am/are) + V-ing + Object
+- **Contoh**: She *is working* on a special project today. (Hanya hari ini/sementara)
+- **Kata Kunci**: right now, at the moment, currently, today.
+
+> **Catatan Penting!**
+> Beberapa kata kerja (Stative Verbs) tidak boleh ditambahkan -ing. Contohnya: *know, like, want, understand*.
+> Salah: I am knowing you. (Benar: I know you).`,
+    },
+  });
+
+  await prisma.lesson.create({
+    data: {
+      moduleId: moduleEng1.id,
+      title: 'Past Simple & Past Perfect',
+      slug: 'past-simple-and-perfect',
+      orderIndex: 2,
+      xpReward: 20,
+      durationMinutes: 8,
+      content: `### Mengurutkan Kejadian di Masa Lalu
+Saat menceritakan kejadian masa lalu, kita sering menggunakan kombinasi Past Simple dan Past Perfect.
+
+#### Past Simple
+Untuk aksi yang sudah selesai di masa lalu.
+- **Pola**: Subject + V2
+- **Contoh**: I *arrived* at the station at 8 AM.
+
+#### Past Perfect
+Untuk aksi masa lalu yang terjadi **sebelum** aksi masa lalu lainnya terjadi.
+- **Pola**: Subject + had + V3
+- **Contoh**: The train *had left* when I arrived.
+
+**Visualisasi Waktu (Timeline):**
+1. Kereta berangkat (Past Perfect: *had left*)
+2. Saya tiba di stasiun (Past Simple: *arrived*)
+3. Sekarang (Present)
+
+> *Tips*: Past Perfect adalah "Masa lalunya masa lalu"!`,
+    },
+  });
+
+  const quizEng1 = await prisma.quiz.create({
+    data: {
+      moduleId: moduleEng1.id,
+      title: 'Kuis Evaluasi: English Tenses',
+      description: 'Latihan soal Grammar fokus pada penggunaan tenses dasar dan kombinasi.',
+      passingScore: 80,
+      xpReward: 50,
+      orderIndex: 1,
+    },
+  });
+
+  const qEng1 = await prisma.question.create({
+    data: {
+      quizId: quizEng1.id,
+      prompt: 'Pilih jawaban yang paling tepat untuk melengkapi kalimat berikut:\n"Shh! The baby _____ right now."',
+      explanation: 'Ada penanda waktu "right now" (sekarang), sehingga kita harus menggunakan Present Continuous (is/am/are + V-ing).',
+      points: 50,
+      type: QuestionType.MULTIPLE_CHOICE,
+      orderIndex: 1,
+      categoryTag: 'Grammar',
+    },
+  });
+  await prisma.option.createMany({
+    data: [
+      { questionId: qEng1.id, text: 'is sleeping', isCorrect: true, orderIndex: 1 },
+      { questionId: qEng1.id, text: 'sleeps', isCorrect: false, orderIndex: 2 },
+      { questionId: qEng1.id, text: 'slept', isCorrect: false, orderIndex: 3 },
+      { questionId: qEng1.id, text: 'has slept', isCorrect: false, orderIndex: 4 },
+    ],
+  });
+
+  const qEng2 = await prisma.question.create({
+    data: {
+      quizId: quizEng1.id,
+      prompt: 'When we arrived at the cinema, the film _____.\n(Fill in the blank with the correct tense)',
+      explanation: 'Ada dua kejadian di masa lalu: 1) tiba di bioskop, 2) film sudah mulai duluan. Kejadian yang lebih dulu terjadi (film mulai) menggunakan Past Perfect (had + V3).',
+      points: 50,
+      type: QuestionType.MULTIPLE_CHOICE,
+      orderIndex: 2,
+      categoryTag: 'Grammar',
+    },
+  });
+  await prisma.option.createMany({
+    data: [
+      { questionId: qEng2.id, text: 'had started', isCorrect: true, orderIndex: 1 },
+      { questionId: qEng2.id, text: 'has started', isCorrect: false, orderIndex: 2 },
+      { questionId: qEng2.id, text: 'started', isCorrect: false, orderIndex: 3 },
+      { questionId: qEng2.id, text: 'starts', isCorrect: false, orderIndex: 4 },
+    ],
+  });
+
+  // Removed Pemrograman and Math Adv as requested by new structure.
 
   // 8. Seed Sample User Progress for Demo User
   console.log('📈 Seeding Demo User Progress...');

@@ -17,6 +17,7 @@ import { TryoutCatalogPage } from './pages/tryout/TryoutCatalogPage';
 import { TryoutExamPage } from './pages/tryout/TryoutExamPage';
 import { TryoutResultPage } from './pages/tryout/TryoutResultPage';
 import { AdminDashboardPage } from './pages/admin/AdminDashboardPage';
+import { AdminCourseEditorPage } from './pages/admin/AdminCourseEditorPage';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 
 const queryClient = new QueryClient({
@@ -88,6 +89,14 @@ export const App: React.FC = () => {
                 element={
                   <ProtectedRoute allowedRoles={['ADMIN']}>
                     <AdminDashboardPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/courses/:slug/editor"
+                element={
+                  <ProtectedRoute allowedRoles={['ADMIN']}>
+                    <AdminCourseEditorPage />
                   </ProtectedRoute>
                 }
               />

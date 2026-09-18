@@ -9,7 +9,6 @@ import {
   Bookmark,
 } from 'lucide-react';
 import { examsApi, ExamQuestion, ExamAnswerItem } from '../../api/exams.api';
-import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 
 export const TryoutExamPage: React.FC = () => {
@@ -89,10 +88,10 @@ export const TryoutExamPage: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4 text-white">
+      <div className="min-h-screen flex items-center justify-center p-4">
         <div className="text-center space-y-4">
-          <div className="w-12 h-12 border-4 border-indigo-400 border-t-transparent rounded-full animate-spin mx-auto" />
-          <p className="text-sm font-bold text-slate-300">Menyiapkan Ruang Simulasi UTBK...</p>
+          <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto" />
+          <p className="text-sm font-bold text-slate-600">Menyiapkan Ruang Simulasi UTBK...</p>
         </div>
       </div>
     );
@@ -148,19 +147,19 @@ export const TryoutExamPage: React.FC = () => {
   const optionLetters = ['A', 'B', 'C', 'D', 'E'];
 
   return (
-    <div className="min-h-screen bg-slate-100 flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
+    <div className="min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
       {/* Top UTBK Standard Bar */}
-      <header className="sticky top-0 z-30 bg-slate-900 text-white shadow-md border-b border-slate-800">
+      <header className="sticky top-0 z-30 glass-nav shadow-sm border-b border-indigo-100/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center font-black text-sm shadow">
+            <div className="w-9 h-9 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-black text-sm shadow">
               U
             </div>
             <div>
-              <h2 className="text-sm sm:text-base font-extrabold tracking-tight truncate max-w-xs sm:max-w-md">
+              <h2 className="text-sm sm:text-base font-extrabold tracking-tight text-slate-800 truncate max-w-xs sm:max-w-md">
                 {examTitle}
               </h2>
-              <span className="text-[11px] text-indigo-300 font-bold block">
+              <span className="text-[11px] text-indigo-600 font-bold block">
                 Subtes: {currentQ?.categoryTag}
               </span>
             </div>
@@ -171,11 +170,11 @@ export const TryoutExamPage: React.FC = () => {
             <div
               className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl font-mono text-sm sm:text-base font-black border transition-colors ${
                 isTimeCritical
-                  ? 'bg-rose-500/20 text-rose-400 border-rose-500 animate-pulse'
-                  : 'bg-slate-800 text-amber-300 border-slate-700'
+                  ? 'bg-rose-50 text-rose-600 border-rose-300 animate-pulse'
+                  : 'glass text-amber-700 border-amber-200 shadow-sm'
               }`}
             >
-              <Clock className="w-4 h-4" />
+              <Clock className="w-4 h-4 text-amber-600" />
               <span>{timeString}</span>
             </div>
 
@@ -183,7 +182,7 @@ export const TryoutExamPage: React.FC = () => {
               variant="exam"
               size="sm"
               onClick={() => setShowReviewModal(true)}
-              className="text-xs"
+              className="text-xs font-bold"
             >
               Selesai Ujian
             </Button>
@@ -195,9 +194,9 @@ export const TryoutExamPage: React.FC = () => {
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Left 3 Cols: Question & Options */}
         <div className="lg:col-span-3 space-y-4">
-          <Card className="p-6 sm:p-8 bg-white border-2 border-slate-200 shadow-sm space-y-6">
+          <div className="glass-card rounded-3xl p-6 sm:p-8 border border-white/90 shadow-xl space-y-6">
             {/* Question Subheader */}
-            <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+            <div className="flex items-center justify-between border-b border-slate-200/60 pb-4">
               <span className="text-sm font-black text-slate-800 uppercase tracking-wide">
                 Nomor Soal: <strong className="text-indigo-600 text-lg">{currentIndex + 1}</strong> / {totalQ}
               </span>
@@ -205,10 +204,10 @@ export const TryoutExamPage: React.FC = () => {
               {/* Ragu-ragu Checkbox Toggle */}
               <button
                 onClick={toggleDoubtful}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all btn-press ${
                   answers[currentQ?.id]?.isDoubtful
                     ? 'bg-amber-400 text-slate-900 shadow-sm'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    : 'bg-white/80 border border-slate-200 text-slate-600 hover:bg-white'
                 }`}
               >
                 <Bookmark className="w-4 h-4" />
@@ -217,7 +216,7 @@ export const TryoutExamPage: React.FC = () => {
             </div>
 
             {/* Prompt */}
-            <div className="text-base sm:text-lg font-bold text-slate-900 leading-relaxed whitespace-pre-line">
+            <div className="text-base sm:text-lg font-bold text-slate-800 leading-relaxed whitespace-pre-line">
               {currentQ?.prompt}
             </div>
 
@@ -231,10 +230,10 @@ export const TryoutExamPage: React.FC = () => {
                   <button
                     key={opt.id}
                     onClick={() => handleSelectOption(opt.id)}
-                    className={`w-full text-left p-4 rounded-xl border-2 transition-all flex items-start gap-3.5 btn-press ${
+                    className={`w-full text-left p-4 rounded-2xl border transition-all flex items-start gap-3.5 btn-press ${
                       isSelected
-                        ? 'border-indigo-600 bg-indigo-50/70 text-indigo-950 font-bold shadow-sm'
-                        : 'border-slate-200 bg-white hover:border-slate-300 text-slate-700'
+                        ? 'border-indigo-600 bg-indigo-50/90 text-indigo-950 font-bold shadow-sm'
+                        : 'border-slate-200/80 bg-white/70 hover:border-indigo-300 hover:bg-white text-slate-700'
                     }`}
                   >
                     <span
@@ -253,18 +252,18 @@ export const TryoutExamPage: React.FC = () => {
                 );
               })}
             </div>
-          </Card>
+          </div>
         </div>
 
         {/* Right 1 Col: Question Navigation Palette */}
         <div className="space-y-4">
-          <Card className="p-5 bg-white border-2 border-slate-200 shadow-sm space-y-4">
+          <div className="glass-card rounded-2xl p-5 border border-white/90 shadow-sm space-y-4">
             <h3 className="text-sm font-black text-slate-800 uppercase tracking-wide">
               Nomor Soal Ujian
             </h3>
 
             {/* Color Legend */}
-            <div className="grid grid-cols-3 gap-2 text-[11px] font-bold text-slate-600 border-b border-slate-100 pb-3">
+            <div className="grid grid-cols-3 gap-2 text-[11px] font-bold text-slate-600 border-b border-slate-200/60 pb-3">
               <span className="flex items-center gap-1.5">
                 <span className="w-3 h-3 rounded bg-emerald-500" /> Terjawab
               </span>
@@ -284,7 +283,7 @@ export const TryoutExamPage: React.FC = () => {
                 const isDoubtful = ans?.isDoubtful;
                 const isCurrent = idx === currentIndex;
 
-                let colorStyle = 'bg-slate-100 text-slate-600 border border-slate-200';
+                let colorStyle = 'bg-white/70 text-slate-600 border border-slate-200';
                 if (isDoubtful) {
                   colorStyle = 'bg-amber-400 text-slate-950 font-black';
                 } else if (isSelected) {
@@ -296,7 +295,7 @@ export const TryoutExamPage: React.FC = () => {
                     key={q.id}
                     onClick={() => setCurrentIndex(idx)}
                     className={`h-10 rounded-xl text-xs font-extrabold transition-all ${colorStyle} ${
-                      isCurrent ? 'ring-2 ring-indigo-600 ring-offset-2 scale-105' : ''
+                      isCurrent ? 'ring-2 ring-indigo-600 ring-offset-2 scale-105 shadow' : ''
                     }`}
                   >
                     {idx + 1}
@@ -304,12 +303,12 @@ export const TryoutExamPage: React.FC = () => {
                 );
               })}
             </div>
-          </Card>
+          </div>
         </div>
       </main>
 
       {/* Bottom Action Footer */}
-      <footer className="sticky bottom-0 bg-white border-t border-slate-200 p-4 shadow-lg z-20">
+      <footer className="sticky bottom-0 glass-nav border-t border-indigo-100/60 p-4 shadow-lg z-20">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           <Button
             variant="secondary"
@@ -322,14 +321,12 @@ export const TryoutExamPage: React.FC = () => {
           </Button>
 
           {currentIndex < totalQ - 1 ? (
-            <Button
-              variant="primary"
-              size="md"
+            <button
               onClick={() => setCurrentIndex((prev) => Math.min(totalQ - 1, prev + 1))}
-              className="gap-1.5"
+              className="flex items-center gap-1.5 py-2.5 px-5 rounded-xl font-bold text-sm bg-indigo-500 hover:bg-indigo-400 text-white shadow-lg shadow-indigo-500/25 transition-all btn-press"
             >
               Soal Selanjutnya <ChevronRight className="w-4 h-4" />
-            </Button>
+            </button>
           ) : (
             <Button
               variant="exam"
@@ -337,7 +334,7 @@ export const TryoutExamPage: React.FC = () => {
               onClick={() => setShowReviewModal(true)}
               className="gap-2 shadow-button-exam"
             >
-              <Send className="w-4 h-4" /> Review & Kumpulkan
+              <Send className="w-4 h-4" /> Review &amp; Kumpulkan
             </Button>
           )}
         </div>
@@ -345,10 +342,10 @@ export const TryoutExamPage: React.FC = () => {
 
       {/* Review Modal Before Final Submission */}
       {showReviewModal && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <Card className="max-w-md w-full p-6 space-y-6 shadow-2xl animate-in zoom-in-95 duration-150 bg-white">
+        <div className="fixed inset-0 z-50 bg-slate-950/40 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="max-w-md w-full p-6 space-y-6 shadow-2xl animate-in zoom-in-95 duration-150 glass-card rounded-3xl border border-white/90">
             <div className="text-center space-y-2">
-              <h3 className="text-xl font-black text-slate-900">Konfirmasi Kumpulkan Ujian</h3>
+              <h3 className="text-xl font-black text-slate-800">Konfirmasi Kumpulkan Ujian</h3>
               <p className="text-xs text-slate-500">
                 Periksa kembali rekapitulasi pengerjaan sebelum mengirimkan lembar jawaban.
               </p>
@@ -391,7 +388,7 @@ export const TryoutExamPage: React.FC = () => {
                 Kumpulkan Sekarang
               </Button>
             </div>
-          </Card>
+          </div>
         </div>
       )}
     </div>

@@ -56,10 +56,10 @@ export const QuizEnginePage: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
-        <div className="max-w-md w-full text-center space-y-4">
-          <div className="w-12 h-12 border-4 border-brand-500 border-t-transparent rounded-full animate-spin mx-auto" />
-          <p className="text-sm font-bold text-slate-600">Menyiapkan Lembar Kuis...</p>
+      <div className="min-h-screen flex items-center justify-center p-4 relative">
+        <div className="max-w-md w-full text-center space-y-4 glass-card p-8 rounded-3xl border border-white/90 shadow-lg">
+          <div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto" />
+          <p className="text-sm font-bold text-slate-700">Menyiapkan Lembar Kuis...</p>
         </div>
       </div>
     );
@@ -67,11 +67,11 @@ export const QuizEnginePage: React.FC = () => {
 
   if (isError || !quiz || quiz.questions.length === 0) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
-        <Card className="max-w-md w-full text-center space-y-4 p-8">
+      <div className="min-h-screen flex items-center justify-center p-4 relative">
+        <Card className="glass-card max-w-md w-full text-center space-y-4 p-8 border border-white/90 shadow-xl rounded-3xl">
           <AlertTriangle className="w-12 h-12 text-amber-500 mx-auto" />
           <h2 className="text-xl font-bold text-slate-800">Kuis Tidak Tersedia</h2>
-          <p className="text-xs sm:text-sm text-slate-500">
+          <p className="text-xs sm:text-sm text-slate-600">
             {(error as any)?.message || 'Kuis belum memiliki daftar pertanyaan yang valid.'}
           </p>
           <Button variant="outline" onClick={() => navigate(-1)}>
@@ -118,14 +118,14 @@ export const QuizEnginePage: React.FC = () => {
   const optionLetters = ['A', 'B', 'C', 'D', 'E'];
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col justify-between">
+    <div className="min-h-screen flex flex-col justify-between">
       {/* Top Header Bar */}
-      <header className="sticky top-0 z-30 bg-white border-b-2 border-slate-100 shadow-sm">
+      <header className="sticky top-0 z-30 glass-nav border-b border-indigo-100/60 shadow-sm">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
           {/* Exit Button */}
           <button
             onClick={() => setShowExitConfirm(true)}
-            className="p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+            className="p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100/80 transition-colors"
             title="Keluar dari Kuis"
           >
             <X className="w-6 h-6" />
@@ -138,7 +138,7 @@ export const QuizEnginePage: React.FC = () => {
                 Soal <strong className="text-slate-800">{currentIndex + 1}</strong> dari{' '}
                 {totalQuestions}
               </span>
-              <span className="text-brand-600">{answeredCount}/{totalQuestions} Terjawab</span>
+              <span className="text-indigo-600 font-extrabold">{answeredCount}/{totalQuestions} Terjawab</span>
             </div>
             <ProgressBar value={progressPercent} variant="brand" animated={false} />
           </div>
@@ -164,10 +164,10 @@ export const QuizEnginePage: React.FC = () => {
                 onClick={() => setCurrentIndex(idx)}
                 className={`w-8 h-8 rounded-xl font-black text-xs transition-all ${
                   isCurrent
-                    ? 'bg-slate-900 text-white shadow-md scale-110 ring-2 ring-brand-500'
+                    ? 'bg-indigo-600 text-white shadow-md scale-110 ring-2 ring-indigo-300'
                     : isAnswered
-                    ? 'bg-brand-500 text-white'
-                    : 'bg-white border-2 border-slate-200 text-slate-500 hover:border-slate-300'
+                    ? 'bg-indigo-500/80 text-white'
+                    : 'glass-card border border-white/90 text-slate-500 hover:text-slate-800'
                 }`}
               >
                 {idx + 1}
@@ -177,9 +177,9 @@ export const QuizEnginePage: React.FC = () => {
         </div>
 
         {/* Question Card */}
-        <Card className="p-6 sm:p-8 border-2 border-slate-100 shadow-card bg-white space-y-6">
+        <div className="glass-card rounded-3xl p-6 sm:p-8 border border-white/90 shadow-xl space-y-6">
           {/* Question Tag */}
-          <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+          <div className="flex items-center justify-between border-b border-slate-200/60 pb-4">
             <Badge variant="exam" size="sm">
               {currentQuestion.categoryTag || 'Soal Pilihan Ganda'}
             </Badge>
@@ -189,7 +189,7 @@ export const QuizEnginePage: React.FC = () => {
           </div>
 
           {/* Question Prompt */}
-          <div className="text-base sm:text-lg font-extrabold text-slate-900 leading-relaxed whitespace-pre-line">
+          <div className="text-base sm:text-lg font-extrabold text-slate-800 leading-relaxed whitespace-pre-line">
             {currentQuestion.prompt}
           </div>
 
@@ -203,16 +203,16 @@ export const QuizEnginePage: React.FC = () => {
                 <button
                   key={option.id}
                   onClick={() => handleSelectOption(option.id)}
-                  className={`w-full text-left p-4 sm:p-5 rounded-2xl border-2 transition-all flex items-start gap-4 btn-press ${
+                  className={`w-full text-left p-4 sm:p-5 rounded-2xl border transition-all flex items-start gap-4 btn-press ${
                     isSelected
-                      ? 'border-brand-500 bg-brand-50/70 shadow-button-brand text-brand-950 font-bold'
-                      : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50/70 text-slate-700'
+                      ? 'border-indigo-500 bg-indigo-50/90 shadow-md shadow-indigo-500/10 text-indigo-950 font-bold'
+                      : 'border-slate-200/80 bg-white/70 hover:border-indigo-300 hover:bg-white text-slate-700'
                   }`}
                 >
                   <span
                     className={`w-7 h-7 rounded-lg flex items-center justify-center font-black text-xs shrink-0 transition-colors ${
                       isSelected
-                        ? 'bg-brand-500 text-white'
+                        ? 'bg-indigo-600 text-white'
                         : 'bg-slate-100 text-slate-600 border border-slate-200'
                     }`}
                   >
@@ -225,11 +225,11 @@ export const QuizEnginePage: React.FC = () => {
               );
             })}
           </div>
-        </Card>
+        </div>
       </main>
 
       {/* Bottom Sticky Action Bar */}
-      <footer className="sticky bottom-0 bg-white/95 backdrop-blur border-t-2 border-slate-100 p-4 shadow-lg">
+      <footer className="sticky bottom-0 glass-nav border-t border-indigo-100/60 p-4 shadow-lg">
         <div className="max-w-3xl mx-auto flex items-center justify-between gap-3">
           {/* Prev Button */}
           <Button
@@ -246,19 +246,15 @@ export const QuizEnginePage: React.FC = () => {
           {/* Right Action: Next or Submit */}
           <div className="flex items-center gap-3">
             {currentIndex < totalQuestions - 1 ? (
-              <Button
-                variant="primary"
-                size="lg"
+              <button
                 onClick={handleNext}
-                className="gap-1.5 shadow-button-brand"
+                className="flex items-center gap-1.5 py-2.5 px-5 rounded-xl font-bold text-sm bg-indigo-500 hover:bg-indigo-400 text-white shadow-lg shadow-indigo-500/25 transition-all btn-press"
               >
                 <span>Selanjutnya</span>
                 <ChevronRight className="w-4 h-4" />
-              </Button>
+              </button>
             ) : (
-              <Button
-                variant="streak"
-                size="lg"
+              <button
                 onClick={() => {
                   if (answeredCount < totalQuestions) {
                     setShowSubmitConfirm(true);
@@ -266,12 +262,12 @@ export const QuizEnginePage: React.FC = () => {
                     handleSubmitAttempt();
                   }
                 }}
-                isLoading={submitMutation.isPending}
-                className="gap-2 shadow-button-streak"
+                disabled={submitMutation.isPending}
+                className="flex items-center gap-2 py-2.5 px-5 rounded-xl font-bold text-sm bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/25 transition-all btn-press disabled:opacity-50"
               >
                 <Send className="w-4 h-4" />
                 <span>Kirim Jawaban</span>
-              </Button>
+              </button>
             )}
           </div>
         </div>
@@ -279,13 +275,13 @@ export const QuizEnginePage: React.FC = () => {
 
       {/* Confirmation Modal: Submit with Unanswered Questions */}
       {showSubmitConfirm && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <Card className="max-w-sm w-full p-6 space-y-4 shadow-2xl animate-in zoom-in-95 duration-150">
+        <div className="fixed inset-0 z-50 bg-slate-950/40 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="max-w-sm w-full p-6 space-y-4 shadow-2xl animate-in zoom-in-95 duration-150 glass-card rounded-3xl border border-white/90">
             <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center mx-auto">
               <AlertTriangle className="w-6 h-6" />
             </div>
             <div className="text-center space-y-1.5">
-              <h3 className="text-lg font-black text-slate-900">Belum Semua Terjawab</h3>
+              <h3 className="text-lg font-black text-slate-800">Belum Semua Terjawab</h3>
               <p className="text-xs text-slate-500">
                 Kamu masih memiliki {totalQuestions - answeredCount} soal yang belum diisi. Apakah kamu yakin ingin mengirimkan kuis sekarang?
               </p>
@@ -310,19 +306,19 @@ export const QuizEnginePage: React.FC = () => {
                 Tetap Kirim
               </Button>
             </div>
-          </Card>
+          </div>
         </div>
       )}
 
       {/* Confirmation Modal: Exit Quiz */}
       {showExitConfirm && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <Card className="max-w-sm w-full p-6 space-y-4 shadow-2xl animate-in zoom-in-95 duration-150">
+        <div className="fixed inset-0 z-50 bg-slate-950/40 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="max-w-sm w-full p-6 space-y-4 shadow-2xl animate-in zoom-in-95 duration-150 glass-card rounded-3xl border border-white/90">
             <div className="w-12 h-12 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center mx-auto">
               <HelpCircle className="w-6 h-6" />
             </div>
             <div className="text-center space-y-1.5">
-              <h3 className="text-lg font-black text-slate-900">Tinggalkan Kuis?</h3>
+              <h3 className="text-lg font-black text-slate-800">Tinggalkan Kuis?</h3>
               <p className="text-xs text-slate-500">
                 Progres pengerjaan saat ini tidak akan disimpan jika kamu keluar sebelum mengirimkan jawaban.
               </p>
@@ -344,7 +340,7 @@ export const QuizEnginePage: React.FC = () => {
                 Keluar
               </Button>
             </div>
-          </Card>
+          </div>
         </div>
       )}
     </div>
