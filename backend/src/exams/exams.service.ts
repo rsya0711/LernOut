@@ -369,7 +369,7 @@ export class ExamsService {
         isCorrect,
         isDoubtful,
         selectedOptionId,
-        userSelectedText: userAns?.selectedOption?.text || '(Dikosongkan)',
+        userSelectedText: (userAns as any)?.selectedOption?.text || '(Dikosongkan)',
         correctOptionText: correctOpt?.text || '',
         options: q.options.map((opt) => ({
           id: opt.id,
