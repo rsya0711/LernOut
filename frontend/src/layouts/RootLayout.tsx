@@ -28,7 +28,7 @@ export const RootLayout: React.FC = () => {
     { label: 'Katalog Belajar', path: '/courses', icon: BookOpen },
     { label: 'Tryout UTBK', path: '/tryout', icon: GraduationCap },
     { label: 'Leaderboard', path: '/leaderboard', icon: Trophy },
-    ...(user?.role === 'ADMIN' ? [{ label: 'Admin Panel', path: '/admin', icon: ShieldAlert }] : []),
+    ...(user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN' ? [{ label: 'Admin Panel', path: '/admin', icon: ShieldAlert }] : []),
   ];
 
   return (
@@ -101,8 +101,10 @@ export const RootLayout: React.FC = () => {
                     <div className="text-xs font-bold text-slate-800 leading-tight">{user.fullName || user.username}</div>
                     <div className="text-[10px] text-slate-400 flex items-center gap-1">
                       @{user.username}
-                      {user.role === 'ADMIN' && (
-                        <span className="bg-indigo-100 text-indigo-600 px-1 rounded text-[9px] font-bold">ADMIN</span>
+                      {(user.role === 'ADMIN' || user.role === 'SUPER_ADMIN') && (
+                        <span className="bg-indigo-100 text-indigo-600 px-1 rounded text-[9px] font-bold">
+                          {user.role === 'SUPER_ADMIN' ? 'SUPER ADMIN' : 'ADMIN'}
+                        </span>
                       )}
                     </div>
                   </div>
@@ -136,12 +138,12 @@ export const RootLayout: React.FC = () => {
       </header>
 
       {/* ── Main Content ── */}
-      <main className="flex-1 pb-20 md:pb-8">
+      <main className="flex-1 pb-24 md:pb-8">
         <Outlet />
       </main>
 
       {/* ── Mobile Bottom Nav ── */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 glass-nav border-t border-slate-100 flex items-center justify-around py-2 px-1">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 glass-nav border-t border-slate-100 flex items-center justify-around pb-safe pt-2 pb-2 px-1">
         {navLinks.map((item) => {
           const Icon = item.icon;
           const isActive = location.pathname === item.path;

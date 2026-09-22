@@ -65,7 +65,7 @@ export const UserDashboardPage: React.FC = () => {
         <div className="absolute top-0 right-1/4 w-80 h-80 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-10 w-72 h-72 bg-purple-500/15 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 flex items-center gap-5">
+        <div className="relative z-10 flex flex-col sm:flex-row items-center text-center sm:text-left gap-5">
           <img
             src={
               user?.avatarUrl ||
@@ -74,8 +74,8 @@ export const UserDashboardPage: React.FC = () => {
             alt="Avatar"
             className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-white/60 p-1 border-2 border-white/90 shadow-md"
           />
-          <div className="space-y-1 text-center sm:text-left">
-            <div className="flex items-center gap-2 justify-center sm:justify-start">
+          <div className="space-y-1">
+            <div className="flex flex-col sm:flex-row items-center gap-2">
               <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-slate-800">
                 Halo, <span className="text-shimmer">{user?.fullName || user?.username || 'Pelajar Hebat'}</span>! 👋
               </h1>
@@ -108,7 +108,7 @@ export const UserDashboardPage: React.FC = () => {
       </div>
 
       {/* Gamified Metric Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="glass-card rounded-2xl p-5 flex items-center gap-4">
           <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center shrink-0 shadow-sm">
             <Flame className="w-6 h-6 fill-amber-500 text-amber-500 animate-pulse" />

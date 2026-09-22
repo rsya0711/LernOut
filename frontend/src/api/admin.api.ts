@@ -26,12 +26,13 @@ export interface AdminUserItem {
   username: string;
   fullName?: string;
   avatarUrl?: string | null;
-  role: 'USER' | 'ADMIN';
+  role: 'USER' | 'ADMIN' | 'SUPER_ADMIN';
   xp: number;
   level: number;
   streak: number;
   lastActiveAt?: string;
   createdAt: string;
+  managedCategories?: { id: string; name: string; slug: string }[];
 }
 
 export const adminApi = {
@@ -47,8 +48,13 @@ export const adminApi = {
     return res.data;
   },
 
-  updateUserRole: async (userId: string, role: 'USER' | 'ADMIN') => {
+  updateUserRole: async (userId: string, role: 'USER' | 'ADMIN' | 'SUPER_ADMIN') => {
     const res = await apiClient.patch(`/admin/users/${userId}/role`, { role });
+    return res.data;
+  },
+
+  updateUserCategories: async (userId: string, categoryIds: string[]) => {
+    const res = await apiClient.patch(`/admin/users/${userId}/categories`, { categoryIds });
     return res.data;
   },
 

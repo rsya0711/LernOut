@@ -309,13 +309,13 @@ export const TryoutExamPage: React.FC = () => {
 
       {/* Bottom Action Footer */}
       <footer className="sticky bottom-0 glass-nav border-t border-indigo-100/60 p-4 shadow-lg z-20">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
           <Button
             variant="secondary"
             size="md"
             onClick={() => setCurrentIndex((prev) => Math.max(0, prev - 1))}
             disabled={currentIndex === 0}
-            className="gap-1.5"
+            className="w-full sm:w-auto gap-1.5"
           >
             <ChevronLeft className="w-4 h-4" /> Soal Sebelumnya
           </Button>
@@ -323,7 +323,7 @@ export const TryoutExamPage: React.FC = () => {
           {currentIndex < totalQ - 1 ? (
             <button
               onClick={() => setCurrentIndex((prev) => Math.min(totalQ - 1, prev + 1))}
-              className="flex items-center gap-1.5 py-2.5 px-5 rounded-xl font-bold text-sm bg-indigo-500 hover:bg-indigo-400 text-white shadow-lg shadow-indigo-500/25 transition-all btn-press"
+              className="w-full sm:w-auto flex items-center justify-center gap-1.5 py-2.5 px-5 rounded-xl font-bold text-sm bg-indigo-500 hover:bg-indigo-400 text-white shadow-lg shadow-indigo-500/25 transition-all btn-press"
             >
               Soal Selanjutnya <ChevronRight className="w-4 h-4" />
             </button>
@@ -332,7 +332,7 @@ export const TryoutExamPage: React.FC = () => {
               variant="exam"
               size="md"
               onClick={() => setShowReviewModal(true)}
-              className="gap-2 shadow-button-exam"
+              className="w-full sm:w-auto gap-2 shadow-button-exam"
             >
               <Send className="w-4 h-4" /> Review &amp; Kumpulkan
             </Button>

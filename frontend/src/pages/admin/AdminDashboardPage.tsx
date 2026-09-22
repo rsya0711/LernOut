@@ -6,6 +6,7 @@ import {
   Trash2,
   TrendingUp,
 } from 'lucide-react';
+import { useAuth } from '../../contexts/AuthContext';
 import { adminApi } from '../../api/admin.api';
 import { coursesApi } from '../../api/courses.api';
 import { Card } from '../../components/ui/Card';
@@ -14,9 +15,15 @@ import { Button } from '../../components/ui/Button';
 
 export const AdminDashboardPage: React.FC = () => {
   const queryClient = useQueryClient();
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState<'analytics' | 'courses' | 'users'>('analytics');
   const [showAddCourseModal, setShowAddCourseModal] = useState<boolean>(false);
   const [searchUser, setSearchUser] = useState<string>('');
+
+  // Category Management Modal State
+  const [showCategoryModal, setShowCategoryModal] = useState<boolean>(false);
+  const [selectedUserForCategory, setSelectedUserForCategory] = useState<any>(null);
+  const [selectedCategoryIds, setSelectedCategoryIds] = useState<string[]>([]);
 
   // Form state for new course
   const [newCourse, setNewCourse] = useState({
@@ -74,10 +81,21 @@ export const AdminDashboardPage: React.FC = () => {
   });
 
   const updateRoleMutation = useMutation({
-    mutationFn: ({ userId, role }: { userId: string; role: 'USER' | 'ADMIN' }) =>
+    mutationFn: ({ userId, role }: { userId: string; role: 'USER' | 'ADMIN' | 'SUPER_ADMIN' }) =>
       adminApi.updateUserRole(userId, role),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['adminUsers'] });
+    },
+  });
+
+  const updateCategoriesMutation = useMutation({
+    mutationFn: ({ userId, categoryIds }: { userId: string; categoryIds: string[] }) =>
+      adminApi.updateUserCategories(userId, categoryIds),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['adminUsers'] });
+      setShowCategoryModal(false);
+      setSelectedUserForCategory(null);
+      setSelectedCategoryIds([]);
     },
   });
 
@@ -111,6 +129,22 @@ export const AdminDashboardPage: React.FC = () => {
             <p className="text-xs text-slate-600">
               Pusat analitik platform, pengelolaan kurikulum kursus, dan data pengguna.
             </p>
+            {user?.role === 'SUPER_ADMIN' ? (
+              <div className="mt-2 inline-block">
+                <Badge variant="exam" size="sm">👑 Super Admin (Akses Penuh)</Badge>
+              </div>
+            ) : (
+              <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Akses Mapel:</span>
+                {(user as any)?.managedCategories?.length > 0 ? (
+                  (user as any).managedCategories.map((mc: any) => (
+                    <Badge key={mc.id} variant="neutral" size="sm">{mc.name}</Badge>
+                  ))
+                ) : (
+                  <Badge variant="neutral" size="sm">Belum ada akses mapel</Badge>
+                )}
+              </div>
+            )}
           </div>
         </div>
 
@@ -240,7 +274,9 @@ export const AdminDashboardPage: React.FC = () => {
               <span>LEVEL & AKSI</span>
             </div>
             <div className="divide-y divide-slate-200/60">
-              {courses.map((c) => (
+              {courses.map((c) => {
+                const isManaged = user?.role === 'SUPER_ADMIN' || (user as any)?.managedCategories?.some((mc: any) => mc.id === c.category?.id);
+                return (
                 <div key={c.id} className="p-5 flex items-center justify-between hover:bg-white/50 transition-colors">
                   <div>
                     <h4 className="text-sm font-extrabold text-slate-800">{c.title}</h4>
@@ -251,26 +287,34 @@ export const AdminDashboardPage: React.FC = () => {
 
                   <div className="flex items-center gap-3">
                     <Badge variant="neutral" size="sm">{c.level}</Badge>
-                    <a
-                      href={`/admin/courses/${c.slug}/editor`}
-                      className="px-3 py-1.5 text-xs font-bold text-indigo-700 bg-indigo-50/80 hover:bg-indigo-100 rounded-lg transition-colors border border-indigo-200/60"
-                    >
-                      Edit Kurikulum
-                    </a>
-                    <button
-                      onClick={() => {
-                        if (confirm(`Hapus kursus '${c.title}'?`)) {
-                          deleteCourseMutation.mutate(c.id);
-                        }
-                      }}
-                      className="p-2 text-rose-600 hover:bg-rose-50/80 rounded-lg transition-colors"
-                      title="Hapus Kursus"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
+                    {isManaged ? (
+                      <>
+                        <a
+                          href={`/admin/courses/${c.slug}/editor`}
+                          className="px-3 py-1.5 text-xs font-bold text-indigo-700 bg-indigo-50/80 hover:bg-indigo-100 rounded-lg transition-colors border border-indigo-200/60"
+                        >
+                          Edit Kurikulum
+                        </a>
+                        <button
+                          onClick={() => {
+                            if (confirm(`Hapus kursus '${c.title}'?`)) {
+                              deleteCourseMutation.mutate(c.id);
+                            }
+                          }}
+                          className="p-2 text-rose-600 hover:bg-rose-50/80 rounded-lg transition-colors"
+                          title="Hapus Kursus"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </>
+                    ) : (
+                      <span className="text-xs text-slate-400 font-bold bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200 flex items-center gap-1">
+                        🔒 Akses Dikunci
+                      </span>
+                    )}
                   </div>
                 </div>
-              ))}
+              )})}
             </div>
           </Card>
         </div>
@@ -316,7 +360,21 @@ export const AdminDashboardPage: React.FC = () => {
                     </div>
                   </div>
 
-                  <div>
+                  <div className="flex items-center gap-2">
+                    {u.role === 'ADMIN' && user?.role === 'SUPER_ADMIN' && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="text-xs border-indigo-200 text-indigo-700 hover:bg-indigo-50"
+                        onClick={() => {
+                          setSelectedUserForCategory(u);
+                          setSelectedCategoryIds(u.managedCategories?.map((mc: any) => mc.id) || []);
+                          setShowCategoryModal(true);
+                        }}
+                      >
+                        Kelola Mapel
+                      </Button>
+                    )}
                     <Button
                       variant="outline"
                       size="sm"
@@ -324,11 +382,11 @@ export const AdminDashboardPage: React.FC = () => {
                       onClick={() =>
                         updateRoleMutation.mutate({
                           userId: u.id,
-                          role: u.role === 'ADMIN' ? 'USER' : 'ADMIN',
+                          role: u.role === 'ADMIN' ? 'USER' : u.role === 'SUPER_ADMIN' ? 'ADMIN' : 'ADMIN',
                         })
                       }
                     >
-                      Ubah ke {u.role === 'ADMIN' ? 'USER' : 'ADMIN'}
+                      Ubah ke {u.role === 'ADMIN' || u.role === 'SUPER_ADMIN' ? 'USER' : 'ADMIN'}
                     </Button>
                   </div>
                 </div>
@@ -379,11 +437,14 @@ export const AdminDashboardPage: React.FC = () => {
                   className="w-full p-2.5 bg-white/80 border border-slate-200/80 rounded-xl text-slate-800 font-medium focus:ring-2 focus:ring-indigo-500/20 focus:outline-none shadow-sm"
                 >
                   <option value="">Pilih Kategori</option>
-                  {categories.map((cat) => (
-                    <option key={cat.id} value={cat.id}>
-                      {cat.name}
-                    </option>
-                  ))}
+                  {categories.map((cat) => {
+                    const isManaged = user?.role === 'SUPER_ADMIN' || (user as any)?.managedCategories?.some((mc: any) => mc.id === cat.id);
+                    return (
+                      <option key={cat.id} value={cat.id} disabled={!isManaged}>
+                        {cat.name} {!isManaged && '(Tidak ada akses)'}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
 
@@ -413,6 +474,61 @@ export const AdminDashboardPage: React.FC = () => {
                 isLoading={createCourseMutation.isPending}
               >
                 Simpan Kursus
+              </Button>
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {/* Modal: Manage Categories */}
+      {showCategoryModal && selectedUserForCategory && (
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-md flex items-center justify-center p-4">
+          <Card className="glass-card max-w-md w-full p-6 space-y-4 border border-white/90 shadow-2xl rounded-3xl">
+            <h3 className="text-lg font-black text-slate-800">Kelola Akses Mapel</h3>
+            <p className="text-xs text-slate-600 font-semibold mb-4">
+              Pilih mapel apa saja yang boleh dikelola oleh <span className="text-indigo-700">{selectedUserForCategory.username}</span>.
+            </p>
+            <div className="space-y-2 max-h-60 overflow-y-auto pr-2">
+              {categories.map((cat) => (
+                <label key={cat.id} className="flex items-center gap-3 p-3 rounded-xl border border-slate-200/60 hover:bg-slate-50 cursor-pointer transition-colors bg-white/60">
+                  <input
+                    type="checkbox"
+                    className="w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500"
+                    checked={selectedCategoryIds.includes(cat.id)}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setSelectedCategoryIds([...selectedCategoryIds, cat.id]);
+                      } else {
+                        setSelectedCategoryIds(selectedCategoryIds.filter(id => id !== cat.id));
+                      }
+                    }}
+                  />
+                  <span className="text-sm font-bold text-slate-700">{cat.name}</span>
+                </label>
+              ))}
+            </div>
+            <div className="grid grid-cols-2 gap-3 pt-4">
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => {
+                  setShowCategoryModal(false);
+                  setSelectedUserForCategory(null);
+                  setSelectedCategoryIds([]);
+                }}
+              >
+                Batal
+              </Button>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => updateCategoriesMutation.mutate({
+                  userId: selectedUserForCategory.id,
+                  categoryIds: selectedCategoryIds
+                })}
+                isLoading={updateCategoriesMutation.isPending}
+              >
+                Simpan Mapel
               </Button>
             </div>
           </Card>

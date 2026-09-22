@@ -77,7 +77,7 @@ export const CourseCatalogPage: React.FC = () => {
           </div>
 
           {/* Level Filter */}
-          <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
+          <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-1 md:pb-0 scrollbar-none">
             <span className="text-xs font-bold text-slate-500 flex items-center gap-1">
               <Filter className="w-3.5 h-3.5" /> Level:
             </span>
