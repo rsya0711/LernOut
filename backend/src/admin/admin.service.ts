@@ -245,4 +245,22 @@ export class AdminService {
       },
     });
   }
+
+  // --- Category Management ---
+
+  async createCategory(data: { name: string; slug: string; description?: string; icon?: string; orderIndex?: number }) {
+    return this.prisma.category.create({ data });
+  }
+
+  async updateCategory(id: string, data: any) {
+    const category = await this.prisma.category.findUnique({ where: { id } });
+    if (!category) throw new NotFoundException('Kategori tidak ditemukan');
+    return this.prisma.category.update({ where: { id }, data });
+  }
+
+  async deleteCategory(id: string) {
+    const category = await this.prisma.category.findUnique({ where: { id } });
+    if (!category) throw new NotFoundException('Kategori tidak ditemukan');
+    return this.prisma.category.delete({ where: { id } });
+  }
 }

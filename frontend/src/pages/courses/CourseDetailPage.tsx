@@ -145,7 +145,7 @@ export const CourseDetailPage: React.FC = () => {
 
             {nextTargetLessonId && (
               <Link to={`/lessons/${nextTargetLessonId}`}>
-                <button className="flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-bold text-sm bg-indigo-500 hover:bg-indigo-400 text-white shadow-xl shadow-indigo-500/30 hover:shadow-indigo-500/50 transition-all hover:-translate-y-0.5 btn-press w-full sm:w-auto">
+                <button className="flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-bold text-sm bg-cyan-500/80 backdrop-blur-md border border-cyan-300/50 text-white shadow-lg shadow-cyan-500/30 hover:bg-cyan-400/90 hover:shadow-cyan-500/50 transition-all hover:-translate-y-0.5 btn-press w-full sm:w-auto">
                   <PlayCircle className="w-5 h-5" />
                   {course.completedLessons > 0 ? 'Lanjutkan Belajar' : 'Mulai Belajar Sekarang'}
                 </button>

@@ -66,7 +66,7 @@ export const LeaderboardPage: React.FC = () => {
             onClick={() => setPeriod('weekly')}
             className={`px-5 py-2 rounded-xl text-xs font-extrabold transition-all ${
               period === 'weekly'
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-500/20'
+                ? 'bg-cyan-600/80 backdrop-blur-md border border-cyan-400/50 text-white shadow-md shadow-cyan-500/25'
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
@@ -76,7 +76,7 @@ export const LeaderboardPage: React.FC = () => {
             onClick={() => setPeriod('alltime')}
             className={`px-5 py-2 rounded-xl text-xs font-extrabold transition-all ${
               period === 'alltime'
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-500/20'
+                ? 'bg-cyan-600/80 backdrop-blur-md border border-cyan-400/50 text-white shadow-md shadow-cyan-500/25'
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >

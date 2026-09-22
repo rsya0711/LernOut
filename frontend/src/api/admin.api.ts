@@ -68,6 +68,20 @@ export const adminApi = {
     return res.data;
   },
 
+  // --- Category Management ---
+  createCategory: async (data: any) => {
+    const res = await apiClient.post('/admin/categories', data);
+    return res.data;
+  },
+  updateCategory: async (id: string, data: any) => {
+    const res = await apiClient.patch(`/admin/categories/${id}`, data);
+    return res.data;
+  },
+  deleteCategory: async (id: string) => {
+    const res = await apiClient.delete(`/admin/categories/${id}`);
+    return res.data;
+  },
+
   // --- Curriculum Builder ---
   createModule: async (data: any) => {
     const res = await apiClient.post('/admin/modules', data);

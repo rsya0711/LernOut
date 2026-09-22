@@ -166,7 +166,7 @@ export const QuizEnginePage: React.FC = () => {
                   isCurrent
                     ? 'bg-indigo-600 text-white shadow-md scale-110 ring-2 ring-indigo-300'
                     : isAnswered
-                    ? 'bg-indigo-500/80 text-white'
+                    ? 'bg-cyan-500/80 backdrop-blur-md border border-cyan-300/50 text-white'
                     : 'glass-card border border-white/90 text-slate-500 hover:text-slate-800'
                 }`}
               >
@@ -212,7 +212,7 @@ export const QuizEnginePage: React.FC = () => {
                   <span
                     className={`w-7 h-7 rounded-lg flex items-center justify-center font-black text-xs shrink-0 transition-colors ${
                       isSelected
-                        ? 'bg-indigo-600 text-white'
+                        ? 'bg-cyan-600/80 backdrop-blur-md border border-cyan-400/50 text-white'
                         : 'bg-slate-100 text-slate-600 border border-slate-200'
                     }`}
                   >
@@ -248,7 +248,7 @@ export const QuizEnginePage: React.FC = () => {
             {currentIndex < totalQuestions - 1 ? (
               <button
                 onClick={handleNext}
-                className="flex items-center gap-1.5 py-2.5 px-5 rounded-xl font-bold text-sm bg-indigo-500 hover:bg-indigo-400 text-white shadow-lg shadow-indigo-500/25 transition-all btn-press"
+                className="flex items-center gap-1.5 py-2.5 px-5 rounded-xl font-bold text-sm bg-cyan-500/80 backdrop-blur-md border border-cyan-300/50 text-white shadow-lg shadow-cyan-500/30 hover:bg-cyan-400/90 hover:shadow-cyan-500/50 transition-all btn-press"
               >
                 <span>Selanjutnya</span>
                 <ChevronRight className="w-4 h-4" />

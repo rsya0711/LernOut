@@ -196,7 +196,7 @@ export const QuizResultPage: React.FC = () => {
                 Coba Lagi
               </Button>
               <Link to={nextRecommendation.url}>
-                <button className="flex items-center gap-2 py-2.5 px-5 rounded-xl font-bold text-sm bg-indigo-500 hover:bg-indigo-400 text-white shadow-lg shadow-indigo-500/25 transition-all btn-press">
+                <button className="flex items-center gap-2 py-2.5 px-5 rounded-xl font-bold text-sm bg-cyan-500/80 backdrop-blur-md border border-cyan-300/50 text-white shadow-lg shadow-cyan-500/30 hover:bg-cyan-400/90 hover:shadow-cyan-500/50 transition-all btn-press">
                   Lanjutkan Belajar <ArrowRight className="w-4 h-4" />
                 </button>
               </Link>

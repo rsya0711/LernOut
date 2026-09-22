@@ -63,7 +63,7 @@ export const HomePage: React.FC = () => {
 
             <div className="flex flex-wrap gap-4 pt-2">
               <Link to="/register">
-                <button className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm bg-indigo-500 hover:bg-indigo-400 text-white shadow-xl shadow-indigo-500/30 hover:shadow-indigo-500/50 transition-all hover:-translate-y-0.5 btn-press">
+                <button className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm bg-cyan-500/80 backdrop-blur-md border border-cyan-300/50 text-white shadow-lg shadow-cyan-500/30 hover:bg-cyan-400/90 hover:shadow-cyan-500/50 transition-all hover:-translate-y-0.5 btn-press">
                   Mulai Gratis Sekarang <ArrowRight className="w-4 h-4" />
                 </button>
               </Link>

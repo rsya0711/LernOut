@@ -229,7 +229,7 @@ export const LessonViewPage: React.FC = () => {
               <button
                 onClick={() => completeMutation.mutate()}
                 disabled={completeMutation.isPending}
-                className="flex items-center gap-2 py-3 px-6 rounded-xl font-bold text-sm bg-indigo-500 hover:bg-indigo-400 text-white shadow-xl shadow-indigo-500/30 hover:shadow-indigo-500/50 transition-all hover:-translate-y-0.5 btn-press disabled:opacity-50"
+                className="flex items-center gap-2 py-3 px-6 rounded-xl font-bold text-sm bg-cyan-500/80 backdrop-blur-md border border-cyan-300/50 text-white shadow-lg shadow-cyan-500/30 hover:bg-cyan-400/90 hover:shadow-cyan-500/50 transition-all hover:-translate-y-0.5 btn-press disabled:opacity-50"
               >
                 <CheckCircle2 className="w-5 h-5" />
                 <span>Tandai Selesai (+{lesson.xpReward} XP)</span>
@@ -239,7 +239,7 @@ export const LessonViewPage: React.FC = () => {
             {/* Next Lesson or Quiz button */}
             {lesson.navigation.nextLesson ? (
               <Link to={`/lessons/${lesson.navigation.nextLesson.id}`}>
-                <button className="flex items-center gap-1.5 py-3 px-6 rounded-xl font-bold text-sm bg-indigo-500 hover:bg-indigo-400 text-white shadow-xl shadow-indigo-500/30 hover:shadow-indigo-500/50 transition-all hover:-translate-y-0.5 btn-press">
+                <button className="flex items-center gap-1.5 py-3 px-6 rounded-xl font-bold text-sm bg-cyan-500/80 backdrop-blur-md border border-cyan-300/50 text-white shadow-lg shadow-cyan-500/30 hover:bg-cyan-400/90 hover:shadow-cyan-500/50 transition-all hover:-translate-y-0.5 btn-press">
                   <span>Lanjut Pelajaran</span>
                   <ChevronRight className="w-4 h-4" />
                 </button>
@@ -254,7 +254,7 @@ export const LessonViewPage: React.FC = () => {
               </Link>
             ) : (
               <Link to={`/courses/${lesson.module.course.slug}`}>
-                <button className="flex items-center gap-1.5 py-3 px-6 rounded-xl font-bold text-sm bg-indigo-500 hover:bg-indigo-400 text-white shadow-xl shadow-indigo-500/30 transition-all btn-press">
+                <button className="flex items-center gap-1.5 py-3 px-6 rounded-xl font-bold text-sm bg-cyan-500/80 backdrop-blur-md border border-cyan-300/50 text-white shadow-lg shadow-cyan-500/30 hover:bg-cyan-400/90 hover:shadow-cyan-500/50 transition-all btn-press">
                   <CheckCircle2 className="w-5 h-5" />
                   <span>Selesai Modul</span>
                 </button>

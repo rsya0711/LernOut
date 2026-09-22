@@ -28,27 +28,26 @@ export const Button: React.FC<ButtonProps> = ({
   };
 
   const variantStyles = {
-    // Solid indigo — primary CTA
+    // Primary Cyan Glass
     primary:
-      'bg-indigo-500 text-white hover:bg-indigo-400 shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:-translate-y-0.5',
-    // Subtle white glass — secondary
+      'bg-cyan-500/80 backdrop-blur-md border border-cyan-300/50 text-white hover:bg-cyan-400/90 shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 hover:-translate-y-0.5',
+    // Secondary Glass
     secondary:
-      'bg-white/80 text-slate-700 border border-slate-200 hover:bg-white hover:text-slate-900 hover:border-slate-300 shadow-sm hover:-translate-y-0.5',
-    // Glass border
+      'bg-cyan-50/70 backdrop-blur-md text-cyan-800 border border-cyan-200/60 hover:bg-cyan-100/80 hover:border-cyan-300 shadow-sm hover:-translate-y-0.5',
+    // Outline Glass
     outline:
-      'border border-slate-200 text-slate-700 hover:bg-slate-100 hover:text-slate-900',
-    // Ghost — no bg
+      'border border-cyan-300/70 backdrop-blur-sm text-cyan-700 hover:bg-cyan-50/50 hover:text-cyan-900 hover:border-cyan-400',
+    // Ghost
     ghost:
-      'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70',
-    // Explicit glass variant
+      'text-cyan-700 hover:text-cyan-900 hover:bg-cyan-50/50',
+    // Pure Glass
     glass:
-      'bg-white/70 text-slate-700 border border-white/90 backdrop-blur-md hover:bg-white/90 hover:text-slate-900 shadow-sm hover:-translate-y-0.5',
-    // Streak / gamification
+      'bg-white/30 backdrop-blur-lg text-cyan-800 border border-white/60 hover:bg-white/40 shadow-sm hover:-translate-y-0.5',
+    // Gamification variants (keeping their themes but adding glass)
     streak:
-      'bg-gradient-to-r from-orange-500 to-amber-400 text-white shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50 hover:-translate-y-0.5',
-    // Exam
+      'bg-gradient-to-r from-cyan-500/80 to-teal-400/80 backdrop-blur-md border border-white/20 text-white shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 hover:-translate-y-0.5',
     exam:
-      'bg-gradient-to-r from-violet-500 to-indigo-500 text-white shadow-lg shadow-violet-500/30 hover:shadow-violet-500/50 hover:-translate-y-0.5',
+      'bg-gradient-to-r from-sky-500/80 to-cyan-500/80 backdrop-blur-md border border-white/20 text-white shadow-lg shadow-sky-500/30 hover:shadow-sky-500/50 hover:-translate-y-0.5',
   };
 
   return (

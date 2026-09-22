@@ -87,7 +87,7 @@ export const CourseCatalogPage: React.FC = () => {
                 onClick={() => setSelectedLevel(lvl)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-extrabold whitespace-nowrap transition-all ${
                   selectedLevel === lvl
-                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-500/20'
+                    ? 'bg-cyan-600/80 backdrop-blur-md border border-cyan-400/50 text-white shadow-md shadow-cyan-500/25'
                     : 'bg-white/80 border border-slate-200 text-slate-600 hover:bg-white hover:text-slate-800'
                 }`}
               >
@@ -103,7 +103,7 @@ export const CourseCatalogPage: React.FC = () => {
             onClick={() => setSelectedCategory('all')}
             className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all ${
               selectedCategory === 'all'
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-500/20'
+                ? 'bg-cyan-600/80 backdrop-blur-md border border-cyan-400/50 text-white shadow-md shadow-cyan-500/25'
                 : 'bg-white/80 border border-slate-200 text-slate-600 hover:bg-white hover:text-slate-800'
             }`}
           >
@@ -115,7 +115,7 @@ export const CourseCatalogPage: React.FC = () => {
               onClick={() => setSelectedCategory(cat.slug)}
               className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all ${
                 selectedCategory === cat.slug
-                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-500/20'
+                  ? 'bg-cyan-600/80 backdrop-blur-md border border-cyan-400/50 text-white shadow-md shadow-cyan-500/25'
                   : 'bg-white/80 border border-slate-200 text-slate-600 hover:bg-white hover:text-slate-800'
               }`}
             >
@@ -229,7 +229,7 @@ export const CourseCatalogPage: React.FC = () => {
               {/* Action Button */}
               <div className="pt-4 border-t border-slate-200/70">
                 <Link to={`/courses/${course.slug}`}>
-                  <button className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-bold text-sm bg-indigo-500 hover:bg-indigo-400 text-white shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 transition-all hover:-translate-y-0.5 btn-press">
+                  <button className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-bold text-sm bg-cyan-500/80 backdrop-blur-md border border-cyan-300/50 text-white shadow-lg shadow-cyan-500/30 hover:bg-cyan-400/90 hover:shadow-cyan-500/50 hover:shadow-indigo-500/40 transition-all hover:-translate-y-0.5 btn-press">
                     {course.userProgress && course.userProgress.progressPercent > 0
                       ? 'Lanjutkan Belajar'
                       : 'Buka Kursus'}{' '}

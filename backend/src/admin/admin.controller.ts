@@ -74,6 +74,29 @@ export class AdminController {
     return this.adminService.deleteCourse(user, id);
   }
 
+  // --- Category Management Endpoints ---
+
+  @Post('categories')
+  @Roles(Role.SUPER_ADMIN)
+  @ApiOperation({ summary: 'Buat kategori baru (Hanya Super Admin)' })
+  createCategory(@Body() data: any) {
+    return this.adminService.createCategory(data);
+  }
+
+  @Patch('categories/:id')
+  @Roles(Role.SUPER_ADMIN)
+  @ApiOperation({ summary: 'Update kategori (Hanya Super Admin)' })
+  updateCategory(@Param('id') id: string, @Body() data: any) {
+    return this.adminService.updateCategory(id, data);
+  }
+
+  @Delete('categories/:id')
+  @Roles(Role.SUPER_ADMIN)
+  @ApiOperation({ summary: 'Hapus kategori (Hanya Super Admin)' })
+  deleteCategory(@Param('id') id: string) {
+    return this.adminService.deleteCategory(id);
+  }
+
   // --- Curriculum Builder Endpoints ---
 
   @Post('modules')

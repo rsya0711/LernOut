@@ -9,9 +9,10 @@ import {
   ShieldAlert,
   LogOut,
   User as UserIcon,
-  LayoutDashboard,
+  Compass,
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import logoImg from '../assets/logo.png';
 
 export const RootLayout: React.FC = () => {
   const location = useLocation();
@@ -24,7 +25,7 @@ export const RootLayout: React.FC = () => {
   };
 
   const navLinks = [
-    ...(isAuthenticated ? [{ label: 'Dasbor Saya', path: '/dashboard', icon: LayoutDashboard }] : []),
+    ...(isAuthenticated ? [{ label: 'Dasbor Saya', path: '/dashboard', icon: Compass }] : []),
     { label: 'Katalog Belajar', path: '/courses', icon: BookOpen },
     { label: 'Tryout UTBK', path: '/tryout', icon: GraduationCap },
     { label: 'Leaderboard', path: '/leaderboard', icon: Trophy },
@@ -38,18 +39,12 @@ export const RootLayout: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
 
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-black text-lg shadow-lg shadow-indigo-500/30 group-hover:scale-110 group-hover:shadow-indigo-500/50 transition-all duration-300">
-              L
-            </div>
-            <div>
-              <span className="font-extrabold text-lg tracking-tight text-slate-800">
-                Learn<span className="text-shimmer">Out</span>
-              </span>
-              <span className="hidden sm:inline-block ml-2 text-[10px] font-bold uppercase tracking-wider bg-indigo-50 text-indigo-600 border border-indigo-100 px-1.5 py-0.5 rounded-md">
-                UTBK · Gamified
-              </span>
-            </div>
+          <Link to="/" className="flex items-center group">
+            <img 
+              src={logoImg} 
+              alt="LearnOut Logo" 
+              className="h-10 w-auto object-contain rounded-xl shadow-lg group-hover:scale-105 transition-all duration-300" 
+            />
           </Link>
 
           {/* Desktop Nav */}
@@ -127,7 +122,7 @@ export const RootLayout: React.FC = () => {
                 </Link>
                 <Link
                   to="/register"
-                  className="px-4 py-2 rounded-xl text-sm font-bold bg-indigo-500 hover:bg-indigo-600 text-white shadow-lg shadow-indigo-500/25 transition-all hover:-translate-y-0.5"
+                  className="px-4 py-2 rounded-xl text-sm font-bold bg-cyan-500/80 backdrop-blur-md border border-cyan-300/50 text-white shadow-lg shadow-cyan-500/30 hover:bg-cyan-400/90 hover:shadow-cyan-500/50 transition-all hover:-translate-y-0.5"
                 >
                   Daftar Gratis
                 </Link>

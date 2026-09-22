@@ -177,7 +177,7 @@ export const UserDashboardPage: React.FC = () => {
                 Kamu belum memulai kursus apapun. Pilih materi pertamamu sekarang!
               </p>
               <Link to="/courses">
-                <button className="px-5 py-2.5 rounded-xl font-bold text-sm bg-indigo-500 hover:bg-indigo-400 text-white shadow-lg shadow-indigo-500/25 transition-all btn-press">
+                <button className="px-5 py-2.5 rounded-xl font-bold text-sm bg-cyan-500/80 backdrop-blur-md border border-cyan-300/50 text-white shadow-lg shadow-cyan-500/30 hover:bg-cyan-400/90 hover:shadow-cyan-500/50 transition-all btn-press">
                   Buka Katalog Kursus
                 </button>
               </Link>
@@ -217,7 +217,7 @@ export const UserDashboardPage: React.FC = () => {
                   </div>
 
                   <Link to={`/courses/${course.slug}`}>
-                    <button className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm bg-indigo-500 hover:bg-indigo-400 text-white shadow-lg shadow-indigo-500/25 transition-all btn-press shrink-0">
+                    <button className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm bg-cyan-500/80 backdrop-blur-md border border-cyan-300/50 text-white shadow-lg shadow-cyan-500/30 hover:bg-cyan-400/90 hover:shadow-cyan-500/50 transition-all btn-press shrink-0">
                       Lanjutkan <ArrowRight className="w-4 h-4" />
                     </button>
                   </Link>
@@ -284,7 +284,7 @@ export const UserDashboardPage: React.FC = () => {
                 Ikuti tryout simulasi 30 menit dengan penilaian IRT dan analisis kelemahan subtes.
               </p>
               <Link to="/tryout" className="block pt-1">
-                <button className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-bold text-sm bg-indigo-500 hover:bg-indigo-400 text-white shadow-xl shadow-indigo-500/25 hover:shadow-indigo-500/40 transition-all btn-press">
+                <button className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-bold text-sm bg-cyan-500/80 backdrop-blur-md border border-cyan-300/50 text-white shadow-lg shadow-cyan-500/30 hover:bg-cyan-400/90 hover:shadow-cyan-500/50 hover:shadow-indigo-500/40 transition-all btn-press">
                   Buka Paket Tryout →
                 </button>
               </Link>
