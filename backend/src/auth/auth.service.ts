@@ -90,6 +90,9 @@ export class AuthService {
       where: {
         OR: [{ email: identifier }, { username: identifier }],
       },
+      include: {
+        managedCategories: { select: { id: true, name: true, slug: true } },
+      },
     });
 
     if (!user) {
@@ -118,6 +121,7 @@ export class AuthService {
         fullName: user.fullName,
         avatarUrl: user.avatarUrl,
         role: user.role,
+        managedCategories: user.managedCategories,
         xp: user.xp,
         level: user.level,
         streak: user.streak,
@@ -169,6 +173,7 @@ export class AuthService {
         fullName: true,
         avatarUrl: true,
         role: true,
+        managedCategories: { select: { id: true, name: true, slug: true } },
         xp: true,
         level: true,
         streak: true,

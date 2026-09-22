@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Role } from '@prisma/client';
 
@@ -97,6 +97,7 @@ export class AdminService {
         streak: true,
         lastActiveAt: true,
         createdAt: true,
+        managedCategories: { select: { id: true, name: true, slug: true } },
       },
       take: 50,
     });
@@ -110,7 +111,42 @@ export class AdminService {
     });
   }
 
-  async createCourse(data: {
+  async updateUserCategories(userId: string, categoryIds: string[]) {
+    return this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        managedCategories: {
+          set: categoryIds.map(id => ({ id })),
+        },
+      },
+      select: { id: true, username: true, role: true, managedCategories: { select: { id: true, name: true, slug: true } } },
+    });
+  }
+
+  // --- Security Helpers ---
+  private checkCategoryAccess(user: any, categoryId: string) {
+    if (user.role === Role.SUPER_ADMIN) return;
+    const hasAccess = user.managedCategories?.some((c: any) => c.id === categoryId);
+    if (!hasAccess) {
+      throw new ForbiddenException('Akses ditolak: Kamu tidak memiliki izin untuk mengelola kategori mata pelajaran ini.');
+    }
+  }
+
+  private async checkCourseAccess(user: any, courseId: string) {
+    if (user.role === Role.SUPER_ADMIN) return;
+    const course = await this.prisma.course.findUnique({ where: { id: courseId } });
+    if (!course) throw new NotFoundException('Kursus tidak ditemukan');
+    this.checkCategoryAccess(user, course.categoryId);
+  }
+
+  private async checkModuleAccess(user: any, moduleId: string) {
+    if (user.role === Role.SUPER_ADMIN) return;
+    const mod = await this.prisma.module.findUnique({ where: { id: moduleId }, include: { course: true } });
+    if (!mod) throw new NotFoundException('Modul tidak ditemukan');
+    this.checkCategoryAccess(user, mod.course.categoryId);
+  }
+
+  async createCourse(user: any, data: {
     categoryId: string;
     title: string;
     slug: string;
@@ -119,28 +155,36 @@ export class AdminService {
     level?: any;
     isPublished?: boolean;
   }) {
+    this.checkCategoryAccess(user, data.categoryId);
     return this.prisma.course.create({ data });
   }
 
-  async updateCourse(id: string, data: any) {
+  async updateCourse(user: any, id: string, data: any) {
+    await this.checkCourseAccess(user, id);
+    if (data.categoryId) {
+      this.checkCategoryAccess(user, data.categoryId);
+    }
     return this.prisma.course.update({ where: { id }, data });
   }
 
-  async deleteCourse(id: string) {
+  async deleteCourse(user: any, id: string) {
+    await this.checkCourseAccess(user, id);
     return this.prisma.course.delete({ where: { id } });
   }
 
   // --- Curriculum Management ---
 
-  async createModule(data: { courseId: string; title: string; description?: string; orderIndex: number }) {
+  async createModule(user: any, data: { courseId: string; title: string; description?: string; orderIndex: number }) {
+    await this.checkCourseAccess(user, data.courseId);
     return this.prisma.module.create({ data });
   }
 
-  async deleteModule(id: string) {
+  async deleteModule(user: any, id: string) {
+    await this.checkModuleAccess(user, id);
     return this.prisma.module.delete({ where: { id } });
   }
 
-  async createLesson(data: {
+  async createLesson(user: any, data: {
     moduleId: string;
     title: string;
     slug: string;
@@ -149,14 +193,20 @@ export class AdminService {
     xpReward: number;
     orderIndex: number;
   }) {
+    await this.checkModuleAccess(user, data.moduleId);
     return this.prisma.lesson.create({ data });
   }
 
-  async deleteLesson(id: string) {
+  async deleteLesson(user: any, id: string) {
+    if (user.role !== Role.SUPER_ADMIN) {
+      const lesson = await this.prisma.lesson.findUnique({ where: { id } });
+      if (!lesson) throw new NotFoundException('Lesson tidak ditemukan');
+      await this.checkModuleAccess(user, lesson.moduleId);
+    }
     return this.prisma.lesson.delete({ where: { id } });
   }
 
-  async createQuiz(data: {
+  async createQuiz(user: any, data: {
     moduleId: string;
     title: string;
     description?: string;
@@ -164,10 +214,11 @@ export class AdminService {
     xpReward: number;
     orderIndex: number;
   }) {
+    await this.checkModuleAccess(user, data.moduleId);
     return this.prisma.quiz.create({ data });
   }
 
-  async createQuestion(data: {
+  async createQuestion(user: any, data: {
     quizId: string;
     prompt: string;
     explanation?: string;
@@ -177,6 +228,13 @@ export class AdminService {
     categoryTag?: string;
     options: { text: string; isCorrect: boolean; orderIndex: number }[];
   }) {
+    if (user.role !== Role.SUPER_ADMIN) {
+      const quiz = await this.prisma.quiz.findUnique({ where: { id: data.quizId } });
+      if (!quiz) throw new NotFoundException('Quiz tidak ditemukan');
+      if (quiz.moduleId) {
+        await this.checkModuleAccess(user, quiz.moduleId);
+      }
+    }
     const { options, ...questionData } = data;
     return this.prisma.question.create({
       data: {

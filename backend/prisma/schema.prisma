@@ -14,6 +14,7 @@ datasource db {
 enum Role {
   USER
   ADMIN
+  SUPER_ADMIN
 }
 
 enum CourseLevel {
@@ -55,6 +56,7 @@ model User {
   examAttempts     ExamAttempt[]
   userAchievements UserAchievement[]
   streakLogs       StreakLog[]
+  managedCategories Category[] @relation("AdminCategories")
 
   @@index([xp(sort: Desc)])
   @@index([streak(sort: Desc)])
@@ -76,6 +78,7 @@ model Category {
   updatedAt   DateTime @updatedAt
 
   courses Course[]
+  admins  User[]   @relation("AdminCategories")
 
   @@index([slug])
   @@index([orderIndex])

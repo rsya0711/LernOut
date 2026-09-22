@@ -38,6 +38,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         level: true,
         streak: true,
         createdAt: true,
+        managedCategories: { select: { id: true, name: true, slug: true } },
       },
     });
 
