@@ -90,7 +90,7 @@ export const HomePage: React.FC = () => {
                   <span className="text-indigo-600">30 / 50 XP</span>
                 </div>
                 <div className="h-2 rounded-full bg-slate-200 overflow-hidden">
-                  <div className="h-full w-3/5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500" />
+                  <div className="h-full w-3/5 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500" />
                 </div>
               </div>
               <div className="grid grid-cols-3 gap-3">
@@ -165,7 +165,7 @@ export const HomePage: React.FC = () => {
                       </div>
                       <div className="h-1.5 rounded-full bg-slate-200 overflow-hidden">
                         <div
-                          className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all"
+                          className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 transition-all"
                           style={{ width: `${progress}%` }}
                         />
                       </div>
